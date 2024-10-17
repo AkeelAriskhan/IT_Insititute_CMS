@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./FeeManagement.css">
+    <title>Student Registration</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <link rel="icon" href="../../Images/logo.png">
+
+    <title>Way Makers Academy &copy;</title>
+</head>
+
+<body>
+    <nav>
+        <div id="logo-container">
+            <img src="../../Images/logo.png" alt="Logo" width="80px">
+            <p>Way</p>
+            <p> Makers</p>
+            <p>Academy</p>
+        </div>
+        <div class="navebar-menu-toggle">
+            <i class="fa-solid fa-bars"></i>
+        </div>
+    </nav>
+
+    <!-- Side Navebar -->
+    <div class="side-navebar">
+        <p>
+            <i class="fa-solid fa-xmark"></i>
+        </p>
+        <ul class="side-navebar-links">
+            <li class="side-navebar-link"><a href="../2_StudentRegistration/StudentRegistration.html">REGISTER</a></li>
+            <li class="side-navebar-link"><a href="../3_FeeManagement/FeeManagement.html">PAYMENT</a></li>
+            <li class="side-navebar-link"><a href="../4_CourseOfferings/CourseOfferings.html">COURSE OFFERINGS</a></li>
+            <li class="side-navebar-link"><a href="../5_Report/Report.html">REPORT</a></li>
+            <li class="side-navebar-link logout"><a href="#" id="logoutButton">LOGOUT</a></li>
+        </ul>
+    </div>
+
+    <div id="main-container">
+        <div id="sub-container">
+            <div id="fee-management">
+                <h2>Fee Management</h2>
+                <form id="fee-management-form">
+                    <div class="row">
+                        <label for="nic">NIC Number</label>
+                        <input type="text" id="nic" name="nic" required><br>
+                    </div>
+
+                    <div class="row">
+                        <label for="total-course-fee">Total Course Fee</label>
+                        <p id="total-course-fee">Rs 0</p>
+                    </div>
+
+                    <div class="row">
+                        <label for="fullname">Payment Plans</label>
+                        <select name="payment-plan" id="payment-plan">
+                            <option>Payment-plan</option>
+                            <option value="fullpayment">Full Payment</option>
+                            <option value="installment">Installment</option>
+                        </select>
+                    </div>
+
+                    <div class="row">
+                        <label for="total-amount">Total Amount</label>
+                        <p id="total-amount">Rs 0</p>
+                    </div>
+
+                    <div class="row">
+                        <label for="phone">Installments</label>
+                        <p id="installment-amount">Rs 0</p>
+                    </div>
+
+                    <div id="button-container">
+                        <button type="submit" class="main-btn">Pay</button>
+                    </div>
+
+                </form>
+
+                <div>
+                    <p id="fee-management-message"></p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- payment detail table -->
+    <div class="table-container">
+        <main class="table-main-container" id="table-main-container">
+        
+            <div id="table-container">
+                <div id="heading-container">
+                    <h1>Student Payment Details</h1>
+                </div>
+                <div id="popup-btn-container">
+                    <button type="button" id="installment-btn">Installment</button>
+                    <button type="button" id="full-payment-btn">FullPayment</button>
+                </div>
+            </div>
+    
+            <div id="table-1">
+                    <table class="payment-details-table-1" id="payment-details-table-1">
+                        <thead>
+                            <tr>
+                                <th>NIC Number</th>
+                                <th>Course Fee</th>
+                                <th>Installment Amount</th>
+                                <th>Payment Paid</th>
+                                <th>Payment Due</th>
+                            </tr>
+                        </thead>
+                        <tbody id="installment-body">
+
+                        </tbody>
+                    </table>
+            </div>
+    
+            <div id="table-2" style="display: none;">
+                    <table class="payment-details-table-2" id="payment-details-table-2">
+                        <thead>
+                            <tr>
+                                <th>NIC Number</th>
+                                <th>Full Name</th>
+                                <th>Course Fee</th>
+                                <th>Payment Paid</th>
+                            </tr>
+                        </thead>
+                        <tbody id="fullpayment-body">
+
+                        </tbody>
+                    </table>
+            </div>
+        </main>
+    </div>
+    
+
+
+
+    <footer>
+        <div class="container">
+            <div class="footer-left">
+                <h3>Our Facilities</h3>
+                <ul>
+                  <li><p>State-of-the-Art Classrooms</p></li>
+                  <li><p>High-speed internet Access</p></li>
+                  <li><p>On-Site Labs</p></li>
+                  <li><p>Resource Library</p></li> 
+                </ul>
+            </div>
+       
+            <div class="footer-right">
+                <h3>Contact information</h3>
+                <ul>
+                    <li><b>Address:</b>WayMakers Acadamy,</br>No.12,Kankesanthurai Road,</br>Jaffna</li>
+                    <li><b>Email:</b> <a href="waymakersacademy@gmail.com">waymakersacademy@gmail.com</a></li>
+                    <li><b>Phone:</b> (+94)77-369-5284</li>
+                </ul>
+            </div>
+            <div class="footer-center">
+                <h3>Social media</h3>
+                <ul>
+                    <li><a href="https://www.facebook.com/"><img src="../../Images/facebook.png" alt="facebook"></a></li>
+                    <li><a href="https://www.whatsapp.com/"><img src="../../Images/whatsapp.png" alt="whatsapp"></a></li>
+                    <li><a href="https://www.instagram.com/"><img src="../../Images/instagram.png" alt="instagram"></a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+
+    <script src="./FeeManagement.js"></script>
+</body>
+
+</html>

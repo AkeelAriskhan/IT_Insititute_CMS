@@ -1,0 +1,111 @@
+/* Navebar*/
+nav{
+
+    background-color:#ecbeb9f9;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 30px;
+
+}
+#navbar {
+    
+    display: flex;
+    justify-content: start;
+    gap: 10px;
+    height: 100px;
+    width: 100px;
+}
+
+#logo-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+#logo-container p{
+    font-size: 25px;
+    font-weight: bolder;
+    color: rgb(15, 5, 79);
+}
+
+nav ul{
+    display: flex;
+    list-style: none;
+    width: 420px;
+    margin-left: 30px;
+    margin-top: 20px;
+}
+
+nav ul li{
+    margin-left: 20px;
+}
+nav ul li a{
+    text-decoration: none;
+    font-weight: 600;
+    color:  rgb(15, 5, 79) 
+  
+}
+nav ul li::after{
+    content: '';
+    width: 0%;
+    height: 2px;
+    background: rgb(15, 5, 79) ;
+    display: block;
+    margin: auto;
+    transition: 0.5s;
+}
+nav ul li:hover::after{
+    width: 100%;
+}
+.background > nav > ul > li >button{
+    padding: 1px 5px;
+    border-radius: 5px;
+    font-size: 15px;
+    background-color: #ecbeb9f9;
+    color: rgb(8, 1, 53);
+    font-weight: 600;
+}
+.background > nav > ul > li >button:active{
+    scale: 0.95;
+}
+
+
+
+
+
+/*footer*/
+footer {
+    background-color: #ecbeb9f9;
+    color:rgb(6, 0, 49);
+    padding: 10px 0;
+    margin-top: 15px;
+}
+
+footer .container {
+    display: flex;
+    justify-content:space-around;
+}
+
+footer h3 {
+    margin-top: 0;
+}
+
+footer ul {
+    list-style: none;
+    padding: 0;
+}
+
+footer ul li {
+    margin-bottom: 5px;
+    font-size: 15px;
+}
+
+footer ul li a {
+    text-decoration: none;
+    color: rgb(15, 5, 79);
+}
+footer img{
+    width: 30px;
+}

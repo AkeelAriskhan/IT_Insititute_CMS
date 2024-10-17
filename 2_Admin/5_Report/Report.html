@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./Report.css">
+    <title>Report</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <link rel="icon" href="../../Images/logo.png">
+  
+    <title>Way Makers Academy &copy;</title>
+</head>
+
+<body>
+    <nav>
+        <div id="logo-container">
+            <img src="../../Images/logo.png" alt="Logo" width="80px">
+            <p>Way</p>
+            <p> Makers</p>
+            <p>Academy</p>  
+        </div>
+        <ul>
+            <li class="navebar-link"><a id="student-details-btn" ><h3>Student Details</h3></a></li>
+            <li class="navebar-link"><a id="course-enrollment-btn" ><h3>Course Enrollment</h3></a></li>
+            <li class="navebar-link"><a id="financial-btn" ><h3>Financial Report</h3></a></li>
+            
+        </ul>
+        <div class="navebar-menu-toggle">
+            <i class="fa-solid fa-bars"></i>
+        </div>
+    </nav>
+
+      <!-- Side Navebar -->
+      <div class="side-navebar">
+        <p>
+            <i class="fa-solid fa-xmark"></i>
+        </p>
+        <ul class="side-navebar-links">
+            <li class="side-navebar-link"><a href="../2_StudentRegistration/StudentRegistration.html">REGISTER</a></li>
+            <li class="side-navebar-link"><a href="../3_FeeManagement/FeeManagement.html">PAYMENT</a></li>
+            <li class="side-navebar-link"><a href="../4_CourseOfferings/CourseOfferings.html">COURSE OFFERINGS</a></li>
+            <li class="side-navebar-link"><a href="../5_Report/Report.html">REPORT</a></li>
+            <li class="side-navebar-link logout"><a href="#" id="logoutButton">LOGOUT</a></li>
+        </ul>
+    </div>
+
+
+
+    <div id="student-details-report">
+        <main id="student-report" class="tb-container">
+            <div id="report-container">
+
+                <div class="heading">
+                    <h1>Student Report</h1>
+                    <div id="search-container">
+                        <input type="text" id="search-by-nic" placeholder="NIC number"><button id="report-generate-btn">Generate Report</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <main class="table-main-container" id="table-main-container" class="tb-container">
+            <div id="table-container">
+                <table >
+
+                    <h2>Student Details</h2>
+                    <thead>
+                        <tr>
+                            <th>NIC Number</th><th>Full Name</th><th>Phone Number</th><th>Email</th>
+                        </tr>
+                    </thead>
+                    <tbody id="student-details-table">
+
+                    </tbody>
+
+                </table>
+            </div>  
+        </main>
+
+        <main class="table-main-container" id="table-main-container" class="tb-container">
+            <div id="table-container">
+                <table >
+
+                    <h2>Course Details</h2>
+                    <thead>
+                        <tr>
+                            <th>Course Name</th><th>Level</th><th>Duration</th>
+                        </tr>
+                    </thead>
+                    <tbody id="Course-details-table">
+
+                    </tbody>
+                    
+                </table>
+
+            </div>  
+        </main>
+
+        <main class="table-main-container" id="table-main-container" class="tb-container">
+            <div id="table-container">
+                <div id="row1">
+                    <h2>Payment Details</h2>
+                    <table >
+                        <thead>
+                            <tr>
+                                <th>Course fee</th><th>Payment plan</th><th>Paid payment</th>
+                            </tr>
+                        </thead>
+                        <tbody id="full-Payment-details-table">
+
+                        </tbody>
+                        
+                    </table>
+                </div>
+                <div id="row2" style="display: none;">
+                    <h2>Payment Details</h2>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Course fee</th>
+                                <th>Payment plan</th>
+                                <th>Installments</th>
+                                <th>Installment Amount</th>
+                                <th>Payment paid</th>
+                                <th>Payment Due</th>
+                                <th>Payment Date</th>
+                            </tr>
+                        </thead>
+                        <tbody id="installment-Payment-details-table">
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>  
+        </main>
+    </div>
+
+
+    <div class="cet" >
+        <main class="table-main-container" id="course-enrollment" class="tb-container" style="display: none;">
+            <div id="course-enrollment-table-container">
+                <table id="course-enrollment-table">
+                    <h1>Course Enrollment</h1>
+                        <tr>
+                            <th>Course ID</th><th>Course Name</th><th>Proficiency Level</th><th>Enrollment</th>
+                        </tr>
+                </table>
+            </div> 
+        </main>
+    </div>
+    
+
+    <div class="cet">
+        <main class="table-main-container" id="financial-report" class="tb-container"  style="display: none;">
+            <div id="financial-table-container">
+                <table id="financial-report-table">
+                    <h1>Financial Report</h1>
+                    <tr>
+                        <th>Initial Amount</th><th>Course Amount</th><th>Total Income</th><th>Out Standing Amount</th>
+                    </tr>
+                </table>
+            </div>
+        </main>
+    </div>
+    
+
+    <footer>
+        <div class="container">
+            <div class="footer-left">
+                <h3>Our Facilities</h3>
+                <ul>
+                  <li><p>State-of-the-Art Classrooms</p></li>
+                  <li><p>High-speed internet Access</p></li>
+                  <li><p>On-Site Labs</p></li>
+                  <li><p>Resource Library</p></li> 
+                </ul>
+            </div>
+       
+            <div class="footer-right">
+                <h3>Contact information</h3>
+                <ul>
+                    <li><b>Address:</b>WayMakers Acadamy,</br>No.12,Kankesanthurai Road,</br>Jaffna</li>
+                    <li><b>Email:</b> <a href="waymakersacademy@gmail.com">waymakersacademy@gmail.com</a></li>
+                    <li><b>Phone:</b> (+94)77-369-5284</li>
+                </ul>
+            </div>
+            <div class="footer-center">
+                <h3>Social media</h3>
+                <ul>
+                    <li><a href="https://www.facebook.com/"><img src="../../Images/facebook.png" alt="facebook"></a></li>
+                    <li><a href="https://www.whatsapp.com/"><img src="../../Images/whatsapp.png" alt="whatsapp"></a></li>
+                    <li><a href="https://www.instagram.com/"><img src="../../Images/instagram.png" alt="instagram"></a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+    <script src="./Report.js"></script>
+</body>
+</html>
+

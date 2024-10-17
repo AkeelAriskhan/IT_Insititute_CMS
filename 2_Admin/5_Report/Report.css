@@ -1,0 +1,256 @@
+
+nav{
+    background-color: #ecbeb9f9;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 30px;
+}
+#navbar {
+    
+    display: flex;
+    justify-content: start;
+    gap: 10px;
+    height: 100px;
+    width: 100px;
+}
+
+nav ul{
+    display: flex;
+    list-style: none;
+    width: 420px;
+    margin-left: 40px;
+    margin-top: 20px;
+}
+
+nav ul li{
+    margin-left: 30px;
+}
+nav ul li a{
+    text-decoration: none;
+    color: rgb(255, 255, 255);
+    font-weight: 300;
+    color:  rgb(15, 5, 79);
+    font-size: 16px;
+    font-weight: 80px;
+    
+}
+
+#logo-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+#logo-container p{
+    font-size: 25px;
+    font-weight: bolder;
+    color: rgb(15, 5, 79);
+    font-family: "Poppins", sans-serif;
+
+}
+.navebar-menu-toggle{
+    font-size: 2.2rem;
+    padding-top: 15px;
+}
+.navebar-link a{
+    cursor: pointer;
+}
+.navebar-link a:hover{
+    text-decoration: underline;
+}
+
+.fa-bars{
+    cursor: pointer;
+    color:rgb(15, 5, 79);
+}
+.fa-bars:active{
+    scale: 0.9;
+}
+h3{
+    width: 155px;
+    text-align: center;
+}
+
+/* Side Navebar */
+
+.side-navebar{
+    width: 17%;
+    height: 100%;
+    background-color:rgb(15, 5, 79);
+    position: fixed;
+    top: 0;
+    right: -50%;
+    padding: 15px;
+    color: white;
+    transition: 1s;
+    margin: 0;
+}
+
+.side-navebar p{
+    text-align: right;
+    font-size: 2rem;
+}
+.fa-xmark{
+    cursor: pointer;
+}
+.fa-xmark:active{
+    scale: 0.9;
+}
+
+.side-navebar-links{
+    list-style: none;
+}
+.side-navebar-link{
+    margin-bottom: 30px;
+}
+.side-navebar-link a{
+    text-decoration: none;
+    color: white;
+    font-size: 1.3rem;
+}
+a::after{
+    content: '';
+    width: 0%;
+    height: 2px;
+    display: block;
+    margin: auto;
+    transition: 0.5s;
+}
+a:hover::after{
+    width: 100%;
+}
+.logout > a{
+    color: #ecbeb9f9;
+}
+
+/* ---------- */
+h1{
+    color:rgb(15, 5, 79) ;
+}
+#search-container{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+#search-container > input{
+    border-radius: 25px;
+    height: 40px;
+    width: 220px;
+    padding: 0px 15px;
+    font-weight: bold;
+    font-size: 20px;
+    letter-spacing: 2px;
+    text-align: center;
+}
+#search-container > button{
+    padding: 12px;
+    background-color:rgb(15, 5, 79);
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+#search-container > button:active{
+    scale: 0.95;
+}
+
+
+/* details table */
+.table-main-container{
+    text-align: center;
+    margin-top: 3.4%;
+    border-radius: 15px;
+    padding: 0px 20px;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+    border: 2px solid black;
+}
+table{
+    width: 100%;
+    border-spacing: 15px;
+}
+#row1,#row2{
+    width: 100%;
+}
+th , td{
+    border: 2px solid rgb(15, 5, 79);
+    padding: 1px;
+    border-radius: 5px;
+}
+
+
+h2{
+    color:rgb(15, 5, 79) ;
+}
+
+
+/* main Table */
+
+#student-details-report{
+    width: 60%;
+    margin: auto;
+    text-align: center;
+}
+
+
+.tb-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#course-enrollment,
+#financial-report{
+    height: 480px;
+    width: 80%;
+    margin: auto;
+}
+#course-enrollment-table-container{
+    overflow: auto;
+}
+.cet{
+    margin: 50px;
+}
+
+
+/*footer*/
+footer {
+    background-color: #ecbeb9f9;
+    color:rgb(6, 0, 49);
+    padding: 10px 0;
+    margin-top: 15px;
+}
+
+footer .container {
+    display: flex;
+    justify-content:space-around;
+}
+
+footer h3 {
+    margin-top: 0;
+    font-family: "Poppins", sans-serif;
+
+}
+
+footer ul {
+    list-style: none;
+    padding: 0;
+}
+
+footer ul li {
+    margin-bottom: 5px;
+    font-size: 15px;
+    font-family: "Poppins", sans-serif;
+
+}
+
+footer ul li a {
+    text-decoration: none;
+    color: rgb(15, 5, 79);
+    font-family: "Poppins", sans-serif;
+
+}
+footer img{
+    width: 30px;
+}

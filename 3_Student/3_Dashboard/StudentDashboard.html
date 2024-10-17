@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./StudentDashboard.css">
+
+    <!--google fonts-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
+
+     <!-- Fond Awesome Link -->
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+    <link rel="icon" href="../../image/cd.png">
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <title>Dashboard</title>
+</head>
+
+<body>
+        <div class="navigation">
+            <ul>
+                <li class="logo">
+                    <a href="#">
+                        <span class="title" style="margin-left: 20px;"><h2 id="greeting"></h2></span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#"  id="home">
+                        <span class="icon">
+                            <ion-icon name="home-outline"></ion-icon>
+                        </span>
+                        <span class="title">Home</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#"  id="profile-btn">
+                        <span class="icon">
+                            <ion-icon name="person-outline"></ion-icon></ion-icon>
+                        </span>
+                        <span class="title">profile</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#"  id="payment">
+                        <span class="icon">
+                            <ion-icon name="card-outline"></ion-icon>
+                        </span>
+                        <span class="title">Payment Details</span>
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="#" onclick="showSection('Settings')" id="setting">
+                        <span class="icon">
+                            <ion-icon name="settings-outline"></ion-icon>
+                        </span>
+                        <span class="title">Settings</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#" id="notification">
+                        <span class="icon">
+                            <ion-icon name="notifications-outline"></ion-icon></ion-icon>
+                        </span>
+                        <span class="title">Notification</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" onclick="signOut()">
+                        <span class="icon">
+                            <ion-icon name="log-out-outline"></ion-icon>
+                        </span>
+                        <span class="title">Sign Out</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    
+        <div class="main">
+            <div class="topbar">
+                <div class="toggle">
+                    <ion-icon name="menu-outline"></ion-icon>
+                </div>
+               
+
+            </div>
+
+        <!-- course -->
+        <div class="courses" id="course-container">
+            <div class="card-container">
+                <div class="card">
+                    <img src="../../Images/Pyhon.png" alt="PYTHON" style="width:100%">
+                    <h2>PYTHON</h2>
+                    <p>Registered:650 students</p>
+                </div>
+    
+                <div class="card">
+                    <img src="../../Images/661dcf1aa2445-C-Sharp.png" alt="C Sharp" style="width:100px">
+                    <h2>C Sharp</h2></br>
+                    <p>Registered:900 students </p>
+                </div>
+                <div class="card">
+                    <img src="../../Images/C++.png" alt="C++" style="width:100%">
+                    <h2>C++</h2>
+                    <p>Registered:550 students  </p>
+                </div>
+                <div class="card">
+                    <img src="../../Images/Java.png" alt="JAVA" style="width:100%">
+                    <h2>JAVA</h2>
+                    <p>Registered:700 students </p>
+                </div>
+            </div>
+        </div>
+
+            
+
+            <!-- status -->
+            <section class="main-course" id="my-course" >
+                    <h1>My Course</h1>
+                <div class="course-box">
+                    <ul>
+                        <li class="active">In progress</li>
+                    </ul>
+                    <div class="course">
+                        <div class="box">
+                            <h3 id="courseName"></h3>
+                            <span id="proficiencyLevels"></span> <br>
+                            <span>Status :</span>
+                            <span id="status"></span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+
+    
+            <!-- Personal Information -->
+            <div class="student-dashboard-container rofile-information"  id="profile-information" style="display: none;">
+                <div class="form-container">
+                    <h2>Personal Information</h2>
+                        <form id="profile-form">
+        
+                    <div class="form-group">
+                        <label for="nic">NIC Number</label>
+                        <input type="text" id="nic" name="nic" disabled><br>
+                    </div>
+        
+                    <div class="form-group">
+                        <label for="full-name">Full Name</label>
+                        <input type="text" id="fullname" name="fullname" disabled><br>
+                    </div>
+        
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" disabled><br>
+                    </div>
+        
+                    <div class="form-group">
+                        <label for="phone">Phone</label>
+                        <input type="tel" id="phone" name="phone" disabled><br>
+                    </div>
+                    <div id="button-container">
+                        <button type="button" class="main-btn" id="update-button">Update Profile</button>
+                        <button type="button"  class="main-btn" id="save-button" style="display: none;">Save</button>
+                        <button type="button"  class="main-btn" id="Cancel-button" style="display: none;">Cancel</button>
+                    </div>
+                        </form>
+                </div>
+            </div>
+
+
+               <!-- Payment  -->
+               <section class="main-payment" id="payment-info" style="display: none;">
+                    <div class="heading">
+                        <h2>Payment History</h2>
+                    </div>
+                    <div class="payment-box">
+                        <p id="p1"></p> 
+                        <p id="p2"></p>
+                        <p id="p3"></p>
+                        <p id="p4"></p>
+                        <p id="p5"></p>
+                        <p id="p6"></p>
+                    </div>
+                </section>
+
+            <!-- Password Change- - settings -->
+            <section class="main-password-change" id="password-change" style="display: none;">
+                <div class="form-container">
+                    <h2>Password Change</h2>
+                    <form id="password-form">
+                        <div class="form-group">
+                            <label for="oldPassword">Old Password</label>
+                            <input type="password" id="oldPassword" name="oldPassword" >
+                        </div>
+
+                        <div class="form-group">
+                            <label for="newPassword">New Password</label>
+                            <input type="password" id="newPassword" name="newPassword" >
+                        </div>
+
+                        <div class="form-group">
+                            <label for="confirmPassword">Confirm Password</label>
+                            <input type="password" id="confirmPassword" name="confirmPassword" >
+                        </div>
+                        
+                    </form>
+                    <div id="button-container">
+                        <button type="button" class="main-btn" id="update-password">Update Password</button>
+                    </div>
+                </div>
+                        
+            </section>
+
+
+
+    <main class="popupbox"  id="notification-container" style="display: none;">
+        <div id="heading-container">
+            <h2>Notifications</h2>
+        </div>
+        <div id="notification-container" >
+            <div class="reminder" id="reminder">
+                <p id="message"></p>
+                <i class="fa-regular fa-circle-xmark" id="remove-notification"></i>
+            </div>
+        </div>
+    </main>
+                    
+    <script src="StudentDashboard.js"></script>
+
+   
+</body>
+
+</html>
