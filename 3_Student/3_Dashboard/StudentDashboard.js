@@ -27,7 +27,7 @@ function toggleSidebar() {
     } else {
         sidebar.style.display = "none";
     }
-};
+}
 
 function signOut() {
     // Placeholder for sign-out logic
@@ -35,6 +35,7 @@ function signOut() {
     // Redirect to the sign-in page or perform other actions
     window.location.href = "../1_StudentLogin/StudentLogin.html";
 }
+
 
 const nic = JSON.parse(sessionStorage.getItem("nic"))
 
@@ -89,6 +90,7 @@ async function UpdatePassword(password,nic){
 
 };
 
+
 function ProfilePicLoading(){
     const student = students.find(s => s.nic == nic);
     const imagePath = student.imagePath
@@ -137,6 +139,9 @@ function PaymentShow(){
         }
     }
 }
+    
+
+
 
 // Profile page
 // Personal Information Update and View
@@ -161,6 +166,7 @@ function DetailsUpdateFormAutoFill(){
     })
 }
 
+
 document.getElementById('save-button').addEventListener('click' , ()=>{
     const student = students.find(s => s.nic == nic);
     const fullName = document.getElementById("fullname").value
@@ -184,23 +190,22 @@ document.getElementById('save-button').addEventListener('click' , ()=>{
     document.getElementById('Cancel-button').style.display = 'none'
 })
 
+document.getElementById('Cancel-button').addEventListener('click',()=>{
+    document.getElementById("fullname").disabled = true
+    document.getElementById("email").disabled = true
+    document.getElementById("phone").disabled = true
 
-    document.getElementById('Cancel-button').addEventListener('click',()=>{
-        document.getElementById("fullname").disabled = true
-        document.getElementById("email").disabled = true
-        document.getElementById("phone").disabled = true
-
-        document.getElementById('update-button').style.display = 'block'
-        document.getElementById('save-button').style.display = 'none'
-        document.getElementById('Cancel-button').style.display = 'none'
-    })
-
+    document.getElementById('update-button').style.display = 'block'
+    document.getElementById('save-button').style.display = 'none'
+    document.getElementById('Cancel-button').style.display = 'none'
+})
 
 document.getElementById('remove-notification').addEventListener('click' , (event)=>{
     event.target.parentElement.remove()
     document.getElementById('circle').style.visibility = "hidden"
  })
  
+
  function ReminderNotification(){
     const student = students.find(s => s.nic == nic);
     const installment = installments.find(i => i.nic == nic);
@@ -221,8 +226,6 @@ document.getElementById('remove-notification').addEventListener('click' , (event
        }
     }
  }
- 
-
 
 function Encryption(password){
     return btoa(password)
@@ -265,9 +268,10 @@ function validatePassword(password) {
   
   }
 
-const student = students.find(s => s.nicNumber == nic);
+  const student = students.find(s => s.nicNumber == nic);
 
 document.getElementById('update-password').addEventListener('click' , ()=>{
+    
     const oldPassword = Encryption(document.getElementById('oldPassword').value);
     const newPassword = Encryption(document.getElementById('newPassword').value);
     const confirmPassword = Encryption(document.getElementById('confirmPassword').value);
@@ -298,7 +302,6 @@ document.getElementById('update-password').addEventListener('click' , ()=>{
         }
     }
 })
-
 
 
 document.getElementById('home').addEventListener('click',()=>{
