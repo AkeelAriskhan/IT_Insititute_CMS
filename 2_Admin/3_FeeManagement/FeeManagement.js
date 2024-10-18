@@ -276,7 +276,8 @@ function FullpaymentTable(){
         }
     });
 }
-FullpaymentTable();   
+
+// FullpaymentTable();   
 
 
 document.getElementById("installment-btn").addEventListener('click',() =>{
