@@ -194,7 +194,6 @@ document.getElementById('save-button').addEventListener('click' , ()=>{
         document.getElementById('save-button').style.display = 'none'
         document.getElementById('Cancel-button').style.display = 'none'
     })
-});
 
 
 document.getElementById('remove-notification').addEventListener('click' , (event)=>{
@@ -202,26 +201,26 @@ document.getElementById('remove-notification').addEventListener('click' , (event
     document.getElementById('circle').style.visibility = "hidden"
  })
  
-document.addEventListener('DOMContentLoaded',()=>{
- 
-     const student = students.find(s => s.nicNumber == nic);
- 
-     if(student.installment != null){
-         const installment = installments.find(i => i.nicNumber == nic);
-         const today = new Date();
-         const endOfMonth = new Date(today.getFullYear(), today.getMonth() +1, 0);
-         console.log(endOfMonth.getDate() - today.getDate())
-         if(endOfMonth.getDate() - today.getDate() <= 5){
-              document.getElementById('reminder').style.display = "flex"
-              document.getElementById('message').innerText = `You have to pay your installment of ${installment.installment.installmentAmount}/= this month.`
-         }else{
-             document.getElementById('reminder').style.display = "none"
- 
-         }
-     }else{
-         document.getElementById('reminder').style.display = "none"
-     }
-});
+ function ReminderNotification(){
+    const student = students.find(s => s.nic == nic);
+    const installment = installments.find(i => i.nic == nic);
+    if(student){
+       if(installment){
+           const installment = installments.find(i => i.nic == nic);
+           const today = new Date();
+           const endOfMonth = new Date(today.getFullYear(), today.getMonth() +1, 0);
+
+           if(endOfMonth.getDate() - today.getDate() <= 4){
+                document.getElementById('reminder').style.display = "flex"
+                document.getElementById('message').innerText = `You have to pay your installment of ${installment.installmentAmount}/= this month.`
+           }else{
+               document.getElementById('reminder').style.display = "none"
+           }
+       }else{
+           document.getElementById('reminder').style.display = "none"
+       }
+    }
+ }
  
 
 
