@@ -49,9 +49,18 @@ for (let i = 0; i < courses.length; i++) {
             uniqueCourses.push(course);
         }
     }
-    
+    CourseDropDown();
+
 }
- // console.log(uniqueCourses);
+function CourseDropDown() {
+    uniqueCourses.forEach(C => {
+        const courseDropDown = document.createElement("option")
+        courseDropDown.value = C
+        courseDropDown.textContent = C
+        document.getElementById("select-course").appendChild(courseDropDown)
+    })
+}
+
 
 document.addEventListener("DOMContentLoaded",()=>{
     uniqueCourses.forEach(C => {
