@@ -75,18 +75,26 @@ document.getElementById("course-offerings-form").addEventListener('submit',(even
     const totalFee = Number(document.getElementById("course-fee").value);
     let courseID = Number(Math.floor(Math.random()*1000000))
 
-    const course = courses.find(c=>c.courseName == courseName && c.level == level)
+    const course = courses.find(c => c.coursename.toLowerCase() == courseName.toLowerCase() && c.proficiencyLevel == level)
+    console.log(course)
     if(course){
-        course.totalFee = totalFee
+        course.courseFee = totalFee
+        UpdateCourseFee(course.courseid, course.courseFee)
+
         document.getElementById('course-offerings-message').innerHTML = "Update Fee Successfully"
         CourseTable();
     }else{
-        courses.push({courseID,courseName,level,totalFee})
-        document.getElementById('course-offerings-message').innerHTML = "Added New Course"
-        CourseTable();
+       const coursedata = {
+        courseid: courseID,
+        coursename: courseName,
+        proficiencyLevel: level,
+        courseFee: totalFee
+       }
+       AddCourse(coursedata)
+        console.log("course Added")
     }
 
-    localStorage.setItem('courses',JSON.stringify(courses));
+    // localStorage.setItem('courses',JSON.stringify(courses));
     event.target.reset()
 });
 
