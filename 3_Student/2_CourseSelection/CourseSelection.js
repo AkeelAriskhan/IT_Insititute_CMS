@@ -61,28 +61,21 @@ function CourseDropDown() {
     })
 }
 
+// Auto fill NIC in input field
+if (nicNumber) {
+    document.getElementById("nic").value = nicNumber
+}
 
-document.addEventListener("DOMContentLoaded",()=>{
-    uniqueCourses.forEach(C => {
-        const courseDropDown = document.createElement("option")
-        courseDropDown.value = C
-        courseDropDown.textContent = C
-        document.getElementById("select-course").appendChild(courseDropDown)
-    })
-
-    // Auto fill NIC in input field
-    if(nicNumber){
-        document.getElementById("nic").value = nicNumber
-    }
-
-    const student = students.find(s => s.nicNumber == nicNumber);        
-    if(student){
+function StudentNameShow() {
+    const student = students.find(s => s.nic == nicNumber);
+    if (student) {
         document.getElementById('message').style.color = "green";
         document.getElementById('message').textContent = `${student.fullName}`;
     }
-    //disabled nic input 
-    document.getElementById("nic").disabled = true
-});
+}
+
+//disabled nic input 
+document.getElementById("nic").disabled = true
 
 
 //submit form
@@ -95,25 +88,31 @@ document.getElementById("course-form").addEventListener('submit',(event)=>{
     const ProficiencyLevels = document.getElementById("proficiency-levels").value; 
     const duration = document.getElementById("select-duration").value; 
 
-    //Find the Student 
-    const student = students.find(s => s.nicNumber == nicNumber);
-
-
-    if(student){
-        if(course != "" && ProficiencyLevels != "" && duration != ""){
-            student.course = course;
-            student.ProficiencyLevels = ProficiencyLevels;
-            student.duration = duration;
-            localStorage.setItem('students',JSON.stringify(students))
-            document.getElementById('message').style.color = "green"
-            document.getElementById('message').textContent = "Course Successfuly selected"
-
-            window.location.href = "../3_Dashboard/StudentDashboard.html"
-            sessionStorage.setItem('nic' , JSON.stringify(nicNumber))
-        }else{
-            document.getElementById('message').style.color = "red";
-            document.getElementById('message').textContent = `Please Choose the field`;
-        }
-    }
-})
+     //Find the Student 
+     const student = students.find(s => s.nic == nicNumber);
+     console.log(student)
+ 
+ 
+     if (student) {
+         if (course != "" && ProficiencyLevels != "" && duration != "") {
+             const data={
+                 course:course,
+                 proficiencyLevels:ProficiencyLevels,
+                 duration:duration
+             }
+             StudentCourseEnrollAdd(nicNumber,data)
+             document.getElementById('message').style.color = "green"
+             document.getElementById('message').textContent = "Course Successfuly selected"
+ 
+             sessionStorage.setItem('nic', JSON.stringify(nicNumber))
+             
+             setTimeout(()=>{
+                 window.location.href = "../3_Dashboard/StudentDashboard.html"
+             }, 500);
+         } else {
+             document.getElementById('message').style.color = "red";
+             document.getElementById('message').textContent = `Please Choose the field`;
+         }
+     }
+ })
 
