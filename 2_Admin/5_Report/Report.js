@@ -79,16 +79,18 @@ function StudentReport(nic) {
   }
 }
 
-  const paymentDetails = document.getElementById("full-Payment-details-table");
-  paymentDetails.innerHTML = "";
+function ShowFullPaymentStudentDetails(student) {
+  const StudentDetails = document.getElementById("student-details-table");
+  StudentDetails.innerHTML = "";
 
-  const row3 = document.createElement("tr");
-  row3.innerHTML = `
-        <td>${student.fullpayment}</td>
-        <td>Full Payment</td>
-        <td>${student.fullpayment}</td>
-    `;
-  paymentDetails.append(row3);
+  const row = document.createElement("tr");
+  row.innerHTML = `
+          <td>${student.nic}</td>
+          <td>${student.fullName}</td>
+          <td>${student.phoneNumber}</td>
+          <td>${student.email}</td>
+      `;
+  StudentDetails.append(row);
 
   document.getElementById("row2").style.display = "none";
   document.getElementById("row1").style.display = "inline-block";
