@@ -11,10 +11,47 @@ toggleClose.addEventListener("click", function () {
   sideNavebar.style.right = "-50%";
 });
 
-//Data retrive from localstorage
-const students = JSON.parse(localStorage.getItem("students"));
-const courses = JSON.parse(localStorage.getItem("courses"));
-const installments = JSON.parse(localStorage.getItem("installmentDetails"));
+let students  = [];
+let courses = [];
+let installments  = [];
+
+
+const GetAllStudentsURL = 'http://localhost:5209/api/Admin/get-All-Students';
+async function GetAllStudents(){
+    fetch(GetAllStudentsURL).then((response) => {
+        return response.json();
+    }).then((data) => {
+      students = data;
+        const GetAllCoursesURL = 'http://localhost:5209/api/Admin/Get-All-course';
+        //Fetch Students Data from Database
+        async function GetAllCourses(){
+            fetch(GetAllCoursesURL).then((response) => {
+                return response.json();
+            }).then((data) => {
+              courses = data;
+    
+              const GetAllInstallmentsURL = 'http://localhost:5209/api/Payment/getinstalmentdetails';
+              async function GetAllInstallments(){
+                  fetch(GetAllInstallmentsURL).then((response) => {
+                      return response.json();
+                  }).then((data) => {
+                      installments = data;
+                      CourseEnrollTable();
+                      FinancialRepoart();
+                  })
+              };
+              GetAllInstallments()
+
+            })
+        };
+        GetAllCourses()
+        
+    })
+};
+
+GetAllStudents();
+
+
 
 document.getElementById("report-generate-btn").addEventListener("click", () => {
   const nic = document.getElementById("search-by-nic").value;
@@ -22,17 +59,18 @@ document.getElementById("report-generate-btn").addEventListener("click", () => {
 });
 
 function StudentReport(nic) {
-  const student = students.find((student) => student.nicNumber == nic);
+  const student = students.find((student) => student.nic == nic);
+  console.log(student)
   const installment = installments.find(
-    (installment) => installment.nicNumber == nic
+    (installment) => installment.nic == nic
   );
 
   if (student) {
-    if (student.fullpayment != null) {
+    if (student.fullpayment != 0) {
       ShowFullPaymentStudentDetails(student);
     } else if (student.course == null) {
       StudentWhoDidntSelectACourse(student);
-    } else if (student.installment != null) {
+    } else if (installment != null) {
       ShowInstallmentStudentDetails(student, installment);
     }
   } else {
@@ -46,9 +84,9 @@ function ShowFullPaymentStudentDetails(student) {
 
   const row = document.createElement("tr");
   row.innerHTML = `
-          <td>${student.nicNumber}</td>
+          <td>${student.nic}</td>
           <td>${student.fullName}</td>
-          <td>${student.phone}</td>
+          <td>${student.phoneNumber}</td>
           <td>${student.email}</td>
       `;
   StudentDetails.append(row);
@@ -59,7 +97,7 @@ function ShowFullPaymentStudentDetails(student) {
   const row2 = document.createElement("tr");
   row2.innerHTML = `
         <td>${student.course}</td>
-        <td>${student.ProficiencyLevels}</td>
+        <td>${student.proficiencyLevels}</td>
         <td>${student.duration} / Months</td>
     `;
   courseDetails.append(row2);
@@ -87,9 +125,9 @@ function StudentWhoDidntSelectACourse(student) {
 
   const row = document.createElement("tr");
   row.innerHTML = `
-        <td>${student.nicNumber}</td>
+        <td>${student.nic}</td>
         <td>${student.fullName}</td>
-        <td>${student.phone}</td>
+        <td>${student.phoneNumber}</td>
         <td>${student.email}</td>
     `;
   StudentDetails.append(row);
@@ -101,9 +139,9 @@ function ShowInstallmentStudentDetails(student, installment) {
 
   const row = document.createElement("tr");
   row.innerHTML = `
-        <td>${student.nicNumber}</td>
+        <td>${student.nic}</td>
         <td>${student.fullName}</td>
-        <td>${student.phone}</td>
+        <td>${student.phoneNumber}</td>
         <td>${student.email}</td>
     `;
   StudentDetails.append(row);
@@ -114,7 +152,7 @@ function ShowInstallmentStudentDetails(student, installment) {
   const row2 = document.createElement("tr");
   row2.innerHTML = `
       <td>${student.course}</td>
-      <td>${student.ProficiencyLevels}</td>
+      <td>${student.proficiencyLevels}</td>
       <td>${student.duration} / Months</td>
   `;
   courseDetails.append(row2);
@@ -126,13 +164,13 @@ function ShowInstallmentStudentDetails(student, installment) {
 
   const row3 = document.createElement("tr");
   row3.innerHTML = `
-      <td>${installment.installment.totalAmount}</td>
+      <td>${installment.totalAmount}</td>
       <td>Installment</td>
       <td>${student.duration}</td>
-      <td>${student.installment}</td>
-      <td>${installment.installment.paymentPaid}</td>
-      <td>${installment.installment.paymentDue}</td>
-      <td>${new Date(installment.installment.paymentDate).toDateString()}</td>
+      <td>${installment.totalAmount}</td>
+      <td>${installment.paymentPaid}</td>
+      <td>${installment.paymentDue}</td>
+      <td>${new Date(installment.paymentDate).toDateString()}</td>
   `;
   paymentDetails.append(row3);
 
@@ -145,65 +183,69 @@ function ShowInstallmentStudentDetails(student, installment) {
 // Course Enrollment
 // Course Enrollment
 
-document.addEventListener('DOMContentLoaded',()=>{
-    const table = document.getElementById('course-enrollment-table');
-        courses.forEach((course) => {
-            let courseEnrollment = 0;
-            students.forEach((student) => {
+function CourseEnrollTable(){
+  const table = document.getElementById('course-enrollment-table');
+  courses.forEach((course) => {
+      let courseEnrollment = 0;
+      students.forEach((student) => {
 
-                if(student.course == course.courseName && student.ProficiencyLevels == course.level ){
-                        courseEnrollment ++;
-                }
+          if(student.course == course.coursename && student.proficiencyLevels == course.proficiencyLevel ){
+                  courseEnrollment ++;
+          }
 
-            })
+      })
 
-            const row = document.createElement('tr');
-            row.innerHTML = `
-                <td>${course.courseID}</td>
-                <td>${course.courseName}</td>
-                <td>${course.level}</td>
-                <td>${courseEnrollment}</td>
-            `;
-            table.appendChild(row);
-        });
+      const row = document.createElement('tr');
+      row.innerHTML = `
+          <td>${course.courseid}</td>
+          <td>${course.coursename}</td>
+          <td>${course.proficiencyLevel}</td>
+          <td>${courseEnrollment}</td>
+      `;
+      table.appendChild(row);
+  });
+}
+    
 
-});
+
 
 //Financial Report
 //Financial Report
 //Financial Report
 //Financial Report
 
-document.addEventListener('DOMContentLoaded',()=>{
 
-    let initialAmount = 0;
-    let fullPayment = 0;
-    let paidInstallment = 0;
-    let outStandingAmount = 0;
+function FinancialRepoart(){
+  let initialAmount = 0;
+  let fullPayment = 0;
+  let paidInstallment = 0;
+  let outStandingAmount = 0;
 
-    students.forEach((student) => {
-        initialAmount += student.registrationFee;
-        if(student.fullpayment != null){
-            fullPayment += student.fullpayment;
-        }
-    })
-    installments.forEach((installment) =>{
-        paidInstallment += installment.installment.paymentPaid
-        outStandingAmount += installment.installment.paymentDue
-    })
+  students.forEach((student) => {
+      initialAmount += student.registrationFee;
+      if(student.fullpayment != 0){
+          fullPayment += student.fullpayment;
+      }
+  })
+  installments.forEach((installment) =>{
+      paidInstallment += installment.paymentPaid
+      outStandingAmount += installment.paymentDue
+  })
 
-    const financialReport = document.getElementById("financial-report-table");
-    const row = document.createElement("tr");
-    row.innerHTML = `
-            <td>${initialAmount}/=</td>
-            <td>${fullPayment + paidInstallment}/=</td>
-            <td>${fullPayment + paidInstallment + initialAmount}/=</td>
-            <td>${outStandingAmount}/=</td>
-        `;
-    financialReport.append(row);
+  const financialReport = document.getElementById("financial-report-table");
+  const row = document.createElement("tr");
+  row.innerHTML = `
+          <td>${initialAmount}/=</td>
+          <td>${fullPayment + paidInstallment}/=</td>
+          <td>${fullPayment + paidInstallment + initialAmount}/=</td>
+          <td>${outStandingAmount}/=</td>
+      `;
+  financialReport.append(row);
+}
+   
 
 
-});
+
 
 // nave link function
 

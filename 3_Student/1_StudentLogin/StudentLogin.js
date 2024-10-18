@@ -1,5 +1,16 @@
-const students  = JSON.parse(localStorage.getItem('students')) 
+// const students  = JSON.parse(localStorage.getItem('students')) 
 
+let students  = [];
+const GetAllStudentsURL = 'http://localhost:5209/api/Admin/get-All-Students';
+async function GetAllStudents(){
+    //Fetch Students Data from Database
+    fetch(GetAllStudentsURL).then((response) => {
+        return response.json();
+    }).then((data) => {
+        students = data;
+    })
+};
+GetAllStudents();
 function encryption(password){
     return btoa(password)
 }

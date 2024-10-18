@@ -11,12 +11,96 @@ toggleClose.addEventListener("click" , function(){
 
 
 // Retrive Data From Local Storage
-const students = JSON.parse(localStorage.getItem('students')) || [];
-const courses = JSON.parse(localStorage.getItem('courses'));
-const InstallmentDetails = JSON.parse(localStorage.getItem('installmentDetails')) || [];
 
 let totalAmount = 0;
 let installmentAmount = 0;
+
+
+let students = [];
+let InstallmentDetails = [];
+let courses = [];
+
+
+const GetAllStudentsURL = 'http://localhost:5209/api/Admin/get-All-Students';
+async function GetAllStudents(){
+    fetch(GetAllStudentsURL).then((response) => {
+        return response.json();
+    }).then((data) => {
+        students = data;
+
+        FullpaymentTable(); 
+
+        const GetAllCoursesURL = 'http://localhost:5209/api/Admin/Get-All-course';
+        //Fetch Students Data from Database
+        async function GetAllCourses(){
+            fetch(GetAllCoursesURL).then((response) => {
+                return response.json();
+            }).then((data) => {
+                courses = data;
+    
+            })
+        };
+        GetAllCourses()
+        
+    })
+};
+
+GetAllStudents();
+
+
+const GetAllInstallmentsURL = 'http://localhost:5209/api/Payment/getinstalmentdetails';
+async function GetAllInstallments(){
+    fetch(GetAllInstallmentsURL).then((response) => {
+        return response.json();
+    }).then((data) => {
+        InstallmentDetails = data;
+        installmentTable();   
+    })
+};
+
+GetAllInstallments()
+
+const AddFullPaymentURL = 'http://localhost:5209/api/Payment/full-payment';
+//Add FullPayment data in Database
+async function AddFullPayment(FullPaymentData){
+    await fetch(AddFullPaymentURL, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(FullPaymentData)
+    });
+    GetAllStudents();
+    FullpaymentTable();
+};
+
+const UpdateInstallmentURL = 'http://localhost:5209/api/Payment/instalment-update';
+//Update Installments
+async function UpdateInstallment(updatedata){
+    await fetch(UpdateInstallmentURL,{
+        method:"POST",
+        headers:{
+            "Content-Type":"application/json"
+        },
+        body: JSON.stringify(updatedata)
+    });
+    GetAllInstallments();
+    installmentTable(); 
+}
+
+const AddInstallmentURL = 'http://localhost:5209/api/Payment/installment';
+//Add Installment
+async function AddInstallment(InstallmentData){
+    await fetch(AddInstallmentURL, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(InstallmentData)
+    });
+    GetAllInstallments();
+    installmentTable();
+};
 
 document.getElementById('nic').addEventListener("keyup" , () =>{
     const nic = document.getElementById('nic').value;
@@ -76,9 +160,11 @@ document.getElementById('fee-management-form').addEventListener('submit' ,(event
             document.getElementById('fee-management-message').textContent = "Student already paid payment";
         }
         else{
-            student.fullpayment = totalAmount;
-            student.paymentDate = date;
-            FullpaymentTable(); 
+            const FullPaymentData = {
+                nic,
+                fullpaymentamount:totalAmount
+            }
+            AddFullPayment(FullPaymentData)
             document.getElementById('fee-management-message').textContent = `${student.fullName} Paid Full Payment`;
         }  
 
@@ -89,7 +175,7 @@ document.getElementById('fee-management-form').addEventListener('submit' ,(event
             document.getElementById('fee-management-message').textContent = "Student already paid Full payment";
         }
         else{
-            Installment(student,paymentplan,nic,date,paymentId);
+            Installment(student,nic);
         }
 
     }else{
@@ -115,7 +201,7 @@ document.getElementById('fee-management-form').addEventListener('submit' ,(event
 
 
 //Installment Calculation
-function Installment(student,paymentplan,nic,date,paymentId){
+function Installment(student,nic){
     // Today Date 
     const today = new Date();
 
@@ -128,15 +214,25 @@ function Installment(student,paymentplan,nic,date,paymentId){
             document.getElementById('fee-management-message').style.color = "green";
             document.getElementById('fee-management-message').textContent = `${student.fullName} paid Full installment plan`;
         }else{
-            studentInstallment.installment.paymentDue -= installmentAmount;
-            studentInstallment.installment.paymentPaid += installmentAmount;
-            installmentTable(); 
+            const updatedata = {
+                nic,
+                installmentAmount:installmentAmount
+            } 
+            UpdateInstallment(updatedata)
             document.getElementById('fee-management-message').textContent = `${student.fullName} Paid Installment Payment`;
         }
         
     }else{
         let paymentDue = totalAmount - installmentAmount
-        InstallmentDetails.push({nicNumber:student.nicNumber , installment:{totalAmount , installmentAmount , paymentPaid:installmentAmount , paymentDue ,installments:student.duration ,paymentDate:today}})
+        const InstallmentData = {
+            nic,
+            installmentAmount,
+            installments:student.duration,
+            paymentDue,
+            paymentPaid:installmentAmount,
+            totalAmount:totalAmount
+        }
+        AddInstallment(InstallmentData)
         document.getElementById('fee-management-message').textContent = `${student.fullName} Paid Installment Payment`
         installmentTable(); 
     }
@@ -149,29 +245,29 @@ function installmentTable(){
     const table = document.getElementById('installment-body');
     table.innerHTML=""
     InstallmentDetails.forEach((installment) => {
-        const student = students.find(s => s.nicNumber == installment.nicNumber)
+        const student = students.find(s => s.nic == installment.nic)
         const row = document.createElement('tr');
         row.innerHTML = `
-            <td>${installment.nicNumber}</td>
+            <td>${installment.nic}</td>
             <td>${student.fullName}</td>
-            <td>${installment.installment.installmentAmount}/= </td>
-            <td>${installment.installment.paymentPaid}/= </td>
-            <td>${installment.installment.paymentDue}/= </td>
+            <td>${installment.installmentAmount}/= </td>
+            <td>${installment.paymentPaid}/= </td>
+            <td>${installment.paymentDue}/= </td>
         `;
         table.appendChild(row);
     });
 }
-installmentTable();      
+// installmentTable();      
 
 //Full Payment Table
 function FullpaymentTable(){
     const table = document.getElementById('fullpayment-body');
     table.innerHTML = ""
     students.forEach((student) => {
-        if(student.fullpayment != null){
+        if(student.fullpayment != 0){
             const row = document.createElement('tr');
             row.innerHTML = `
-                <td>${student.nicNumber}</td>
+                <td>${student.nic}</td>
                 <td>${student.fullName}</td>
                 <td>${student.fullpayment}/= </td>
                 <td>${student.fullpayment}/= </td>
@@ -180,7 +276,8 @@ function FullpaymentTable(){
         }
     });
 }
-FullpaymentTable();   
+
+// FullpaymentTable();   
 
 
 document.getElementById("installment-btn").addEventListener('click',() =>{
