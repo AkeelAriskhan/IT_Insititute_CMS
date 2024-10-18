@@ -161,26 +161,29 @@ function DetailsUpdateFormAutoFill(){
     })
 }
 
-    document.getElementById('save-button').addEventListener('click' , ()=>{
-        const fullName = document.getElementById("fullname").value
-        const email = document.getElementById("email").value
-        const phone = document.getElementById("phone").value
+document.getElementById('save-button').addEventListener('click' , ()=>{
+    const student = students.find(s => s.nic == nic);
+    const fullName = document.getElementById("fullname").value
+    const email = document.getElementById("email").value
+    const phone = document.getElementById("phone").value
 
-        student.fullName = fullName
-        student.email = email
-        student.phone = phone
+    const studentUpdateData = {
+        nic:student.nic,
+        fullName:fullName,
+        email:email,
+        phoneNumber:phone
+      }
+      UpdateStudentFetch(studentUpdateData);
 
-        document.getElementById("fullname").disabled = true
-        document.getElementById("email").disabled = true
-        document.getElementById("phone").disabled = true
+    document.getElementById("fullname").disabled = true
+    document.getElementById("email").disabled = true
+    document.getElementById("phone").disabled = true
 
-        document.getElementById('update-button').style.display = 'block'
-        document.getElementById('save-button').style.display = 'none'
-        document.getElementById('Cancel-button').style.display = 'none'
+    document.getElementById('update-button').style.display = 'block'
+    document.getElementById('save-button').style.display = 'none'
+    document.getElementById('Cancel-button').style.display = 'none'
+})
 
-
-        localStorage.setItem('students' ,JSON.stringify(students))
-    })
 
     document.getElementById('Cancel-button').addEventListener('click',()=>{
         document.getElementById("fullname").disabled = true
