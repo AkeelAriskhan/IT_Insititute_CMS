@@ -140,17 +140,14 @@ function ShowInstallmentStudentDetails(student, installment) {
   const StudentDetails = document.getElementById("student-details-table");
   StudentDetails.innerHTML = "";
 
-  const row3 = document.createElement("tr");
-  row3.innerHTML = `
-      <td>${installment.installment.totalAmount}</td>
-      <td>Installment</td>
-      <td>${student.duration}</td>
-      <td>${student.installment}</td>
-      <td>${installment.installment.paymentPaid}</td>
-      <td>${installment.installment.paymentDue}</td>
-      <td>${new Date(installment.installment.paymentDate).toDateString()}</td>
-  `;
-  paymentDetails.append(row3);
+  const row = document.createElement("tr");
+  row.innerHTML = `
+        <td>${student.nic}</td>
+        <td>${student.fullName}</td>
+        <td>${student.phoneNumber}</td>
+        <td>${student.email}</td>
+    `;
+  StudentDetails.append(row);
 
   document.getElementById("row2").style.display = "inline-block";
   document.getElementById("row1").style.display = "none";
