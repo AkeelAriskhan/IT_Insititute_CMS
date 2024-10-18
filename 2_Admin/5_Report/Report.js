@@ -92,9 +92,8 @@ function ShowFullPaymentStudentDetails(student) {
       `;
   StudentDetails.append(row);
 
-  document.getElementById("row2").style.display = "none";
-  document.getElementById("row1").style.display = "inline-block";
-}
+  const courseDetails = document.getElementById("Course-details-table");
+  courseDetails.innerHTML = "";
 
 function StudentWhoDidntSelectACourse(student) {
   const StudentDetails = document.getElementById("student-details-table");
