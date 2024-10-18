@@ -119,15 +119,12 @@ function ShowFullPaymentStudentDetails(student) {
   document.getElementById("row1").style.display = "inline-block";
 }
 
+function StudentWhoDidntSelectACourse(student) {
+  const StudentDetails = document.getElementById("student-details-table");
+  StudentDetails.innerHTML = "";
+  document.getElementById("Course-details-table").innerHTML = "";
+  document.getElementById("full-Payment-details-table").innerHTML = "";
 
-  const row = document.createElement("tr");
-  row.innerHTML = `
-        <td>${student.nicNumber}</td>
-        <td>${student.fullName}</td>
-        <td>${student.phone}</td>
-        <td>${student.email}</td>
-    `;
-  StudentDetails.append(row);
 
   const courseDetails = document.getElementById("Course-details-table");
   courseDetails.innerHTML = "";
