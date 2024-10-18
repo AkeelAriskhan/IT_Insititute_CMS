@@ -27,8 +27,7 @@ function toggleSidebar() {
     } else {
         sidebar.style.display = "none";
     }
-}
-
+};
 
 function signOut() {
     // Placeholder for sign-out logic
@@ -37,9 +36,35 @@ function signOut() {
     window.location.href = "../1_StudentLogin/StudentLogin.html";
 }
 
-const students = JSON.parse(localStorage.getItem('students')) ||[]
-const installments = JSON.parse(localStorage.getItem('installmentDetails')) ||[]
 const nic = JSON.parse(sessionStorage.getItem("nic"))
+
+let students = [];
+let installments = [];
+
+const GetAllStudentsURL = 'http://localhost:5209/api/Admin/get-All-Students';
+async function GetAllStudents(){
+    fetch(GetAllStudentsURL).then((response) => {
+        return response.json();
+    }).then((data) => {
+        students = data;
+        ProfilePicLoading();
+        DetailsUpdateFormAutoFill();
+
+        const GetAllInstallmentsURL = 'http://localhost:5209/api/Payment/getinstalmentdetails';
+        async function GetAllInstallments(){
+            fetch(GetAllInstallmentsURL).then((response) => {
+                return response.json();
+            }).then((data) => {
+                installments = data;
+                PaymentShow();
+                ReminderNotification();
+            })
+        };
+        GetAllInstallments()
+    })
+};
+
+GetAllStudents();
 
 // Home Page
 document.addEventListener("DOMContentLoaded" ,() =>{
