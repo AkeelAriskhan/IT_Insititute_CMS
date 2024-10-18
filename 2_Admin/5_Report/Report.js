@@ -228,7 +228,17 @@ function FinancialRepoart(){
       outStandingAmount += installment.paymentDue
   })
     
-
+  const financialReport = document.getElementById("financial-report-table");
+  const row = document.createElement("tr");
+  row.innerHTML = `
+          <td>${initialAmount}/=</td>
+          <td>${fullPayment + paidInstallment}/=</td>
+          <td>${fullPayment + paidInstallment + initialAmount}/=</td>
+          <td>${outStandingAmount}/=</td>
+      `;
+  financialReport.append(row);
+}
+   
 
 // nave link function
 
