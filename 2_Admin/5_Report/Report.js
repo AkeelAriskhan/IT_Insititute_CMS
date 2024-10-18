@@ -59,14 +59,12 @@ document.getElementById("report-generate-btn").addEventListener("click", () => {
 });
 
 
-  const row = document.createElement("tr");
-  row.innerHTML = `
-          <td>${student.nicNumber}</td>
-          <td>${student.fullName}</td>
-          <td>${student.phone}</td>
-          <td>${student.email}</td>
-      `;
-  StudentDetails.append(row);
+function StudentReport(nic) {
+  const student = students.find((student) => student.nic == nic);
+  console.log(student)
+  const installment = installments.find(
+    (installment) => installment.nic == nic
+  );
 
   const courseDetails = document.getElementById("Course-details-table");
   courseDetails.innerHTML = "";
