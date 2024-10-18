@@ -102,17 +102,17 @@ function ProfilePicLoading(){
 }
 
 
-// Home Page
-document.addEventListener("DOMContentLoaded" ,() =>{
-    const student = students.find(s => s.nicNumber == nic);
-    const installment = installments.find(i => i.nicNumber == nic);
+function PaymentShow(){
+    const student = students.find(s => s.nic == nic);
+    console.log(student)
+    const installment = installments.find(i => i.nic == nic);
     if(student){
         document.getElementById("courseName").textContent = student.course
         document.getElementById("greeting").textContent = `Hey ${student.fullName}`
         document.getElementById("proficiencyLevels").textContent = student.ProficiencyLevels
         
 
-        if(student.fullpayment != null || student.installment != null){
+        if(student.fullpayment != 0 || installment != null){
             document.getElementById("status").textContent = `Active`
             document.getElementById("status").style.color = "Green"
         }else{
@@ -121,24 +121,22 @@ document.addEventListener("DOMContentLoaded" ,() =>{
         }
 
 
-        if(student.fullpayment != null){
+        if(student.fullpayment != 0){
             document.getElementById("p1").textContent = `Course Fee   : ${student.fullpayment}`
             document.getElementById("p2").textContent = `Payment Plan : Full Payment`
             document.getElementById("p3").textContent = `Full Payment Done`
             document.getElementById("p4").textContent = `Payment Date : ${new Date(student.paymentDate).toDateString()}`
-        }else if(student.installment != null){
-            document.getElementById("p1").textContent = `Course Fee   : ${installment.installment.totalAmount}`
+        }else if(installment){
+            document.getElementById("p1").textContent = `Course Fee   : ${installment.totalAmount}`
             document.getElementById("p2").textContent = `Payment Plan : Installment`
-            document.getElementById("p3").textContent = `Payment Paid : ${installment.installment.paymentPaid}`
-            document.getElementById("p4").textContent = `Payment Due : ${installment.installment.paymentDue}`
-            document.getElementById("p5").textContent = `Payment Date : ${new Date(installment.installment.paymentDate).toDateString()}`
+            document.getElementById("p3").textContent = `Payment Paid : ${installment.paymentPaid}`
+            document.getElementById("p4").textContent = `Payment Due : ${installment.paymentDue}`
+            document.getElementById("p5").textContent = `Payment Date : ${new Date(installment.paymentDate).toDateString()}`
         }else{
             document.getElementById("p1").textContent = `Payment Pending .....`
         }
     }
-
-
-})
+}
 
 // Profile page
 // Personal Information Update and View
