@@ -45,6 +45,19 @@ async function GetAllStudents(){
     })
 };
 
+GetAllStudents();
+
+
+const GetAllInstallmentsURL = 'http://localhost:5209/api/Payment/getinstalmentdetails';
+async function GetAllInstallments(){
+    fetch(GetAllInstallmentsURL).then((response) => {
+        return response.json();
+    }).then((data) => {
+        InstallmentDetails = data;
+        installmentTable();   
+    })
+};
+
 document.getElementById('nic').addEventListener("keyup" , () =>{
     const nic = document.getElementById('nic').value;
     const student = students.find((student) => student.nicNumber == nic);
