@@ -160,9 +160,11 @@ document.getElementById('fee-management-form').addEventListener('submit' ,(event
             document.getElementById('fee-management-message').textContent = "Student already paid payment";
         }
         else{
-            student.fullpayment = totalAmount;
-            student.paymentDate = date;
-            FullpaymentTable(); 
+            const FullPaymentData = {
+                nic,
+                fullpaymentamount:totalAmount
+            }
+            AddFullPayment(FullPaymentData)
             document.getElementById('fee-management-message').textContent = `${student.fullName} Paid Full Payment`;
         }  
 
@@ -173,7 +175,7 @@ document.getElementById('fee-management-form').addEventListener('submit' ,(event
             document.getElementById('fee-management-message').textContent = "Student already paid Full payment";
         }
         else{
-            Installment(student,paymentplan,nic,date,paymentId);
+            Installment(student,nic);
         }
 
     }else{
