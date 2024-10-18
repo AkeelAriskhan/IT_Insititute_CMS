@@ -58,6 +58,22 @@ async function GetAllInstallments(){
     })
 };
 
+GetAllInstallments()
+
+const AddFullPaymentURL = 'http://localhost:5209/api/Payment/full-payment';
+//Add FullPayment data in Database
+async function AddFullPayment(FullPaymentData){
+    await fetch(AddFullPaymentURL, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(FullPaymentData)
+    });
+    GetAllStudents();
+    FullpaymentTable();
+};
+
 document.getElementById('nic').addEventListener("keyup" , () =>{
     const nic = document.getElementById('nic').value;
     const student = students.find((student) => student.nicNumber == nic);
