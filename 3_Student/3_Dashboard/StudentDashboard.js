@@ -140,14 +140,14 @@ function PaymentShow(){
 
 // Profile page
 // Personal Information Update and View
-document.addEventListener("DOMContentLoaded" ,() =>{
-    const student = students.find(s => s.nicNumber == nic);
+function DetailsUpdateFormAutoFill(){
+    const student = students.find(s => s.nic == nic);
 
     if(student){
-        document.getElementById("nic").value = student.nicNumber
+        document.getElementById("nic").value = student.nic
         document.getElementById("fullname").value = student.fullName
         document.getElementById("email").value = student.email
-        document.getElementById("phone").value = student.phone
+        document.getElementById("phone").value = student.phoneNumber
     }
 
     document.getElementById('update-button').addEventListener("click",()=>{
@@ -159,6 +159,7 @@ document.addEventListener("DOMContentLoaded" ,() =>{
         document.getElementById('save-button').style.display = 'block'
         document.getElementById('Cancel-button').style.display = 'block'
     })
+}
 
     document.getElementById('save-button').addEventListener('click' , ()=>{
         const fullName = document.getElementById("fullname").value
