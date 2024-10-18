@@ -209,6 +209,24 @@ function CourseEnrollTable(){
       table.appendChild(row);
   });
 }
+
+
+function FinancialRepoart(){
+  let initialAmount = 0;
+  let fullPayment = 0;
+  let paidInstallment = 0;
+  let outStandingAmount = 0;
+
+  students.forEach((student) => {
+      initialAmount += student.registrationFee;
+      if(student.fullpayment != 0){
+          fullPayment += student.fullpayment;
+      }
+  })
+  installments.forEach((installment) =>{
+      paidInstallment += installment.paymentPaid
+      outStandingAmount += installment.paymentDue
+  })
     
 
 
