@@ -66,16 +66,18 @@ function StudentReport(nic) {
     (installment) => installment.nic == nic
   );
 
-  const courseDetails = document.getElementById("Course-details-table");
-  courseDetails.innerHTML = "";
-
-  const row2 = document.createElement("tr");
-  row2.innerHTML = `
-        <td>${student.course}</td>
-        <td>${student.ProficiencyLevels}</td>
-        <td>${student.duration} / Months</td>
-    `;
-  courseDetails.append(row2);
+  if (student) {
+    if (student.fullpayment != 0) {
+      ShowFullPaymentStudentDetails(student);
+    } else if (student.course == null) {
+      StudentWhoDidntSelectACourse(student);
+    } else if (installment != null) {
+      ShowInstallmentStudentDetails(student, installment);
+    }
+  } else {
+    alert("Student not found");
+  }
+}
 
   const paymentDetails = document.getElementById("full-Payment-details-table");
   paymentDetails.innerHTML = "";
