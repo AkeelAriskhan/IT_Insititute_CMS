@@ -201,7 +201,7 @@ document.getElementById('fee-management-form').addEventListener('submit' ,(event
 
 
 //Installment Calculation
-function Installment(student,paymentplan,nic,date,paymentId){
+function Installment(student,nic){
     // Today Date 
     const today = new Date();
 
