@@ -107,10 +107,10 @@ function CourseTable(){
     courses.forEach((course) => {
         const row = document.createElement('tr');
         row.innerHTML = `
-            <td>${course.courseName}</td>
-            <td>${course.level}</td>
-            <td>${course.totalFee}/= </td>
-            <td><button class ="action-btn btn2" onclick="removeCourseById(event,${course.courseID})" >Remove</button></td>
+            <td>${course.coursename}</td>
+            <td>${course.proficiencyLevel}</td>
+            <td>${course.courseFee}/= </td>
+            <td><button class ="action-btn btn2" onclick="removeCourseById(event,${course.courseid})" >Remove</button></td>
         `;
         table.appendChild(row);
     });
