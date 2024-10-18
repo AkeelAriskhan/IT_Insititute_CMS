@@ -52,9 +52,12 @@ async function GetAllStudents(){
 GetAllStudents();
 
 
-function ShowFullPaymentStudentDetails(student) {
-  const StudentDetails = document.getElementById("student-details-table");
-  StudentDetails.innerHTML = "";
+
+document.getElementById("report-generate-btn").addEventListener("click", () => {
+  const nic = document.getElementById("search-by-nic").value;
+  StudentReport(nic);
+});
+
 
   const row = document.createElement("tr");
   row.innerHTML = `
