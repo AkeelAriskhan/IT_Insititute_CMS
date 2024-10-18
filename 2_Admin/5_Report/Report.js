@@ -103,15 +103,9 @@ function ShowFullPaymentStudentDetails(student) {
     `;
   courseDetails.append(row2);
 
-  const row = document.createElement("tr");
-  row.innerHTML = `
-        <td>${student.nicNumber}</td>
-        <td>${student.fullName}</td>
-        <td>${student.phone}</td>
-        <td>${student.email}</td>
-    `;
-  StudentDetails.append(row);
-}
+  const paymentDetails = document.getElementById("full-Payment-details-table");
+  paymentDetails.innerHTML = "";
+
 
 function ShowInstallmentStudentDetails(student, installment) {
   const StudentDetails = document.getElementById("student-details-table");
