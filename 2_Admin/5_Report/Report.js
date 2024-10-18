@@ -152,10 +152,13 @@ function ShowInstallmentStudentDetails(student, installment) {
   const courseDetails = document.getElementById("Course-details-table");
   courseDetails.innerHTML = "";
 
-// Course Enrollment
-// Course Enrollment
-// Course Enrollment
-// Course Enrollment
+  const row2 = document.createElement("tr");
+  row2.innerHTML = `
+      <td>${student.course}</td>
+      <td>${student.proficiencyLevels}</td>
+      <td>${student.duration} / Months</td>
+  `;
+  courseDetails.append(row2);
 
 document.addEventListener('DOMContentLoaded',()=>{
     const table = document.getElementById('course-enrollment-table');
