@@ -107,9 +107,18 @@ function ShowFullPaymentStudentDetails(student) {
   paymentDetails.innerHTML = "";
 
 
-function ShowInstallmentStudentDetails(student, installment) {
-  const StudentDetails = document.getElementById("student-details-table");
-  StudentDetails.innerHTML = "";
+  const row3 = document.createElement("tr");
+  row3.innerHTML = `
+        <td>${student.fullpayment}</td>
+        <td>Full Payment</td>
+        <td>${student.fullpayment}</td>
+    `;
+  paymentDetails.append(row3);
+
+  document.getElementById("row2").style.display = "none";
+  document.getElementById("row1").style.display = "inline-block";
+}
+
 
   const row = document.createElement("tr");
   row.innerHTML = `
