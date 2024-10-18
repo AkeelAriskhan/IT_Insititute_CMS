@@ -214,9 +214,11 @@ function Installment(student,nic){
             document.getElementById('fee-management-message').style.color = "green";
             document.getElementById('fee-management-message').textContent = `${student.fullName} paid Full installment plan`;
         }else{
-            studentInstallment.installment.paymentDue -= installmentAmount;
-            studentInstallment.installment.paymentPaid += installmentAmount;
-            installmentTable(); 
+            const updatedata = {
+                nic,
+                installmentAmount:installmentAmount
+            } 
+            UpdateInstallment(updatedata)
             document.getElementById('fee-management-message').textContent = `${student.fullName} Paid Installment Payment`;
         }
         
