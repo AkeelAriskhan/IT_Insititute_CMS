@@ -11,34 +11,46 @@ toggleClose.addEventListener("click", function () {
   sideNavebar.style.right = "-50%";
 });
 
-//Data retrive from localstorage
-const students = JSON.parse(localStorage.getItem("students"));
-const courses = JSON.parse(localStorage.getItem("courses"));
-const installments = JSON.parse(localStorage.getItem("installmentDetails"));
+let students  = [];
+let courses = [];
+let installments  = [];
 
-document.getElementById("report-generate-btn").addEventListener("click", () => {
-  const nic = document.getElementById("search-by-nic").value;
-  StudentReport(nic);
-});
 
-function StudentReport(nic) {
-  const student = students.find((student) => student.nicNumber == nic);
-  const installment = installments.find(
-    (installment) => installment.nicNumber == nic
-  );
+const GetAllStudentsURL = 'http://localhost:5209/api/Admin/get-All-Students';
+async function GetAllStudents(){
+    fetch(GetAllStudentsURL).then((response) => {
+        return response.json();
+    }).then((data) => {
+      students = data;
+        const GetAllCoursesURL = 'http://localhost:5209/api/Admin/Get-All-course';
+        //Fetch Students Data from Database
+        async function GetAllCourses(){
+            fetch(GetAllCoursesURL).then((response) => {
+                return response.json();
+            }).then((data) => {
+              courses = data;
+    
+              const GetAllInstallmentsURL = 'http://localhost:5209/api/Payment/getinstalmentdetails';
+              async function GetAllInstallments(){
+                  fetch(GetAllInstallmentsURL).then((response) => {
+                      return response.json();
+                  }).then((data) => {
+                      installments = data;
+                      CourseEnrollTable();
+                      FinancialRepoart();
+                  })
+              };
+              GetAllInstallments()
 
-  if (student) {
-    if (student.fullpayment != null) {
-      ShowFullPaymentStudentDetails(student);
-    } else if (student.course == null) {
-      StudentWhoDidntSelectACourse(student);
-    } else if (student.installment != null) {
-      ShowInstallmentStudentDetails(student, installment);
-    }
-  } else {
-    alert("Student not found");
-  }
-}
+            })
+        };
+        GetAllCourses()
+        
+    })
+};
+
+GetAllStudents();
+
 
 function ShowFullPaymentStudentDetails(student) {
   const StudentDetails = document.getElementById("student-details-table");
