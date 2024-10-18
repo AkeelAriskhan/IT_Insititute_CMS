@@ -11,14 +11,39 @@ toggleClose.addEventListener("click" , function(){
 
 
 // Retrive Data From Local Storage
-let students = [];
-const AddStudentURL = 'http://localhost:5209/api/Admin/Add-Student';
-const DeleteStudentURL = 'http://localhost:5209/api/Admin/Delete-Students';
-
-
 
 let totalAmount = 0;
 let installmentAmount = 0;
+
+
+let students = [];
+let InstallmentDetails = [];
+let courses = [];
+
+
+const GetAllStudentsURL = 'http://localhost:5209/api/Admin/get-All-Students';
+async function GetAllStudents(){
+    fetch(GetAllStudentsURL).then((response) => {
+        return response.json();
+    }).then((data) => {
+        students = data;
+
+        FullpaymentTable(); 
+
+        const GetAllCoursesURL = 'http://localhost:5209/api/Admin/Get-All-course';
+        //Fetch Students Data from Database
+        async function GetAllCourses(){
+            fetch(GetAllCoursesURL).then((response) => {
+                return response.json();
+            }).then((data) => {
+                courses = data;
+    
+            })
+        };
+        GetAllCourses()
+        
+    })
+};
 
 document.getElementById('nic').addEventListener("keyup" , () =>{
     const nic = document.getElementById('nic').value;
