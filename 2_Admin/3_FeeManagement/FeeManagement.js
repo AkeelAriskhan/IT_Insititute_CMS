@@ -74,6 +74,20 @@ async function AddFullPayment(FullPaymentData){
     FullpaymentTable();
 };
 
+const UpdateInstallmentURL = 'http://localhost:5209/api/Payment/instalment-update';
+//Update Installments
+async function UpdateInstallment(updatedata){
+    await fetch(UpdateInstallmentURL,{
+        method:"POST",
+        headers:{
+            "Content-Type":"application/json"
+        },
+        body: JSON.stringify(updatedata)
+    });
+    GetAllInstallments();
+    installmentTable(); 
+}
+
 document.getElementById('nic').addEventListener("keyup" , () =>{
     const nic = document.getElementById('nic').value;
     const student = students.find((student) => student.nicNumber == nic);
