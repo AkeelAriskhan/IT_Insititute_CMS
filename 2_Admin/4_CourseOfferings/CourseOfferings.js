@@ -40,6 +40,17 @@ async function UpdateCourseFee(CourseId , NewFee){
     CourseTable();
 };
 
+
+const DeleteCourseURL = 'http://localhost:5209/api/Admin/Delete-Course';
+// Delete Course From Database
+async function DeleteCourse(CourseId){
+    // Delete Course
+    await fetch(`${DeleteCourseURL}/${CourseId}`, {
+        method: "DELETE"
+    });
+};
+
+
 toggle.addEventListener("click" ,function(){
     sideNavebar.style.right = "0"
 })
