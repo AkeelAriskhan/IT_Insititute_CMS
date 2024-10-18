@@ -12,6 +12,21 @@ async function GetAllCourses(){
 };
 GetAllCourses()
 
+const AddCourseURL = 'http://localhost:5209/api/Admin/Add-Course';
+//Add Courses in Database
+async function AddCourse(CourseData){
+    // Create new student
+    await fetch(AddCourseURL, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(CourseData)
+    });
+    GetAllCourses();
+    CourseTable();
+};
+
 toggle.addEventListener("click" ,function(){
     sideNavebar.style.right = "0"
 })
