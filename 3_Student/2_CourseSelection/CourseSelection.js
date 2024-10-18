@@ -27,6 +27,16 @@ async function GetAllCourses() {
 };
 GetAllCourses();
 
+const StudentCourseEnrollADDURL = 'http://localhost:5209/api/student/course-selection?nic=';
+async function StudentCourseEnrollAdd(Nic,data){
+    await fetch(`${StudentCourseEnrollADDURL}${Nic}`,{
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data)
+    })
+}
 
 let uniqueCourses = [];
 
