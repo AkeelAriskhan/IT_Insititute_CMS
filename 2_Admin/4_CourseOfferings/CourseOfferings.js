@@ -12,6 +12,7 @@ async function GetAllCourses(){
 };
 GetAllCourses()
 
+
 const AddCourseURL = 'http://localhost:5209/api/Admin/Add-Course';
 //Add Courses in Database
 async function AddCourse(CourseData){
@@ -26,6 +27,7 @@ async function AddCourse(CourseData){
     GetAllCourses();
     CourseTable();
 };
+
 
 const UpdateCourseURL = 'http://localhost:5209/api/Admin/update-Course';
 async function UpdateCourseFee(CourseId , NewFee){
@@ -50,6 +52,7 @@ async function DeleteCourse(CourseId){
     });
 };
 
+
 //Site Navbar
 
 const toggle = document.querySelector(".fa-bars")
@@ -64,7 +67,7 @@ toggleClose.addEventListener("click" , function(){
     sideNavebar.style.right = "-60%"
 })
 
-
+// const courses = JSON.parse(localStorage.getItem('courses')) || [] ;
 
 //Form Submit Function
 document.getElementById("course-offerings-form").addEventListener('submit',(event) =>{
