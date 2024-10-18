@@ -1,11 +1,19 @@
-//retrive data from Local and session storage
-const students = JSON.parse(localStorage.getItem('students'));
 const nicNumber = JSON.parse(sessionStorage.getItem('nic'));
-// console.log(nicNumber)
 
-let courses = JSON.parse(localStorage.getItem('courses'));
+let students = [];
+const GetAllStudentsURL = 'http://localhost:5209/api/Admin/get-All-Students';
+//Fetch Students Data from Database
+async function GetAllStudents() {
+    fetch(GetAllStudentsURL).then((response) => {
+        return response.json();
+    }).then((data) => {
+        students = data;
+        StudentNameShow();
+    })
+};
+GetAllStudents()
 
-// Remove Duplicates courses from Local Storage
+
 let uniqueCourses = [];
 
 for (let i = 0; i < courses.length; i++) {
