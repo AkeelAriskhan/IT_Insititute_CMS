@@ -123,12 +123,11 @@ function removeCourseById(event,courseIdToRemove) {
     const row = event.target.parentElement.parentElement;
     row.remove();
 
-    const courses = JSON.parse(localStorage.getItem('courses')) || [];
-    let indexToRemove = courses.findIndex(obj => obj.courseID === courseIdToRemove);
+    
+    let indexToRemove = courses.findIndex(obj => obj.courseid === courseIdToRemove);
 
     if (indexToRemove !== -1) {
-        courses.splice(indexToRemove, 1); 
-        localStorage.setItem('courses', JSON.stringify(courses));
+        DeleteCourse(courseIdToRemove) 
         document.getElementById('course-offerings-message-2').style.color = "Green";
         document.getElementById('course-offerings-message-2').textContent = "Course Removed Successfully";
     } else {
