@@ -149,9 +149,8 @@ function ShowInstallmentStudentDetails(student, installment) {
     `;
   StudentDetails.append(row);
 
-  document.getElementById("row2").style.display = "inline-block";
-  document.getElementById("row1").style.display = "none";
-}
+  const courseDetails = document.getElementById("Course-details-table");
+  courseDetails.innerHTML = "";
 
 // Course Enrollment
 // Course Enrollment
