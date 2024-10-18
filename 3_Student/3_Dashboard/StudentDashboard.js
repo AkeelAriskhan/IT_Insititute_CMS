@@ -281,12 +281,14 @@ document.getElementById('update-password').addEventListener('click' , ()=>{
         console.log("hello")
     }
 
+    const student = students.find(s => s.nic == nic);
+    console.log(student)
+
     if(student){
         console.log("Hello")
         if(student.password == oldPassword){
             if(newPassword == confirmPassword){
-                student.password = newPassword
-                localStorage.setItem('students',JSON.stringify(students))
+                UpdatePassword(newPassword,nic)
                 alert('Password Changed Successfully')
             }else{
                 alert('Password does not match')
@@ -296,6 +298,7 @@ document.getElementById('update-password').addEventListener('click' , ()=>{
         }
     }
 })
+
 
 
 document.getElementById('home').addEventListener('click',()=>{
