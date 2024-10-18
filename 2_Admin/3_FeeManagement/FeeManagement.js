@@ -88,6 +88,20 @@ async function UpdateInstallment(updatedata){
     installmentTable(); 
 }
 
+const AddInstallmentURL = 'http://localhost:5209/api/Payment/installment';
+//Add Installment
+async function AddInstallment(InstallmentData){
+    await fetch(AddInstallmentURL, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(InstallmentData)
+    });
+    GetAllInstallments();
+    installmentTable();
+};
+
 document.getElementById('nic').addEventListener("keyup" , () =>{
     const nic = document.getElementById('nic').value;
     const student = students.find((student) => student.nicNumber == nic);
