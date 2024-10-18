@@ -126,16 +126,15 @@ function StudentWhoDidntSelectACourse(student) {
   document.getElementById("full-Payment-details-table").innerHTML = "";
 
 
-  const courseDetails = document.getElementById("Course-details-table");
-  courseDetails.innerHTML = "";
-
-  const row2 = document.createElement("tr");
-  row2.innerHTML = `
-      <td>${student.course}</td>
-      <td>${student.ProficiencyLevels}</td>
-      <td>${student.duration} / Months</td>
-  `;
-  courseDetails.append(row2);
+  const row = document.createElement("tr");
+  row.innerHTML = `
+        <td>${student.nic}</td>
+        <td>${student.fullName}</td>
+        <td>${student.phoneNumber}</td>
+        <td>${student.email}</td>
+    `;
+  StudentDetails.append(row);
+}
 
   const paymentDetails = document.getElementById(
     "installment-Payment-details-table"
