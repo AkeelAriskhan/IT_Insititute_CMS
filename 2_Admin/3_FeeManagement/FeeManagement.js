@@ -224,7 +224,15 @@ function Installment(student,nic){
         
     }else{
         let paymentDue = totalAmount - installmentAmount
-        InstallmentDetails.push({nicNumber:student.nicNumber , installment:{totalAmount , installmentAmount , paymentPaid:installmentAmount , paymentDue ,installments:student.duration ,paymentDate:today}})
+        const InstallmentData = {
+            nic,
+            installmentAmount,
+            installments:student.duration,
+            paymentDue,
+            paymentPaid:installmentAmount,
+            totalAmount:totalAmount
+        }
+        AddInstallment(InstallmentData)
         document.getElementById('fee-management-message').textContent = `${student.fullName} Paid Installment Payment`
         installmentTable(); 
     }
@@ -237,14 +245,14 @@ function installmentTable(){
     const table = document.getElementById('installment-body');
     table.innerHTML=""
     InstallmentDetails.forEach((installment) => {
-        const student = students.find(s => s.nicNumber == installment.nicNumber)
+        const student = students.find(s => s.nic == installment.nic)
         const row = document.createElement('tr');
         row.innerHTML = `
-            <td>${installment.nicNumber}</td>
+            <td>${installment.nic}</td>
             <td>${student.fullName}</td>
-            <td>${installment.installment.installmentAmount}/= </td>
-            <td>${installment.installment.paymentPaid}/= </td>
-            <td>${installment.installment.paymentDue}/= </td>
+            <td>${installment.installmentAmount}/= </td>
+            <td>${installment.paymentPaid}/= </td>
+            <td>${installment.paymentDue}/= </td>
         `;
         table.appendChild(row);
     });
