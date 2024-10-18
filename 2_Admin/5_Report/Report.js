@@ -182,23 +182,22 @@ function ShowInstallmentStudentDetails(student, installment) {
 }
 
 
-document.addEventListener('DOMContentLoaded',()=>{
+// Course Enrollment
+// Course Enrollment
+// Course Enrollment
+// Course Enrollment
 
-    let initialAmount = 0;
-    let fullPayment = 0;
-    let paidInstallment = 0;
-    let outStandingAmount = 0;
+function CourseEnrollTable(){
+  const table = document.getElementById('course-enrollment-table');
+  courses.forEach((course) => {
+      let courseEnrollment = 0;
+      students.forEach((student) => {
 
-    students.forEach((student) => {
-        initialAmount += student.registrationFee;
-        if(student.fullpayment != null){
-            fullPayment += student.fullpayment;
-        }
-    })
-    installments.forEach((installment) =>{
-        paidInstallment += installment.installment.paymentPaid
-        outStandingAmount += installment.installment.paymentDue
-    })
+          if(student.course == course.coursename && student.proficiencyLevels == course.proficiencyLevel ){
+                  courseEnrollment ++;
+          }
+
+      })
 
     const financialReport = document.getElementById("financial-report-table");
     const row = document.createElement("tr");
