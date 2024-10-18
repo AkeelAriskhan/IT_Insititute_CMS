@@ -1,6 +1,16 @@
-const toggle = document.querySelector(".fa-bars")
-const toggleClose = document.querySelector(".fa-xmark")
-const sideNavebar = document.querySelector(".side-navebar")
+let courses = [];
+
+const GetAllCoursesURL = 'http://localhost:5209/api/Admin/Get-All-course';
+//Fetch Students Data from Database
+async function GetAllCourses(){
+    fetch(GetAllCoursesURL).then((response) => {
+        return response.json();
+    }).then((data) => {
+        courses = data;
+        CourseTable();
+    })
+};
+GetAllCourses()
 
 toggle.addEventListener("click" ,function(){
     sideNavebar.style.right = "0"
@@ -10,7 +20,6 @@ toggleClose.addEventListener("click" , function(){
     sideNavebar.style.right = "-60%"
 })
 
-const courses = JSON.parse(localStorage.getItem('courses')) || [] ;
 
 //Form Submit Function
 document.getElementById("course-offerings-form").addEventListener('submit',(event) =>{
@@ -77,28 +86,6 @@ function removeCourseById(event,courseIdToRemove) {
         document.getElementById('course-offerings-message-2').textContent = "";
         }, 2000);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 //Logout function
