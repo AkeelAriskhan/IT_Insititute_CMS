@@ -1,3 +1,60 @@
+let courses = [];
+
+const GetAllCoursesURL = 'http://localhost:5209/api/Admin/Get-All-course';
+//Fetch Students Data from Database
+async function GetAllCourses(){
+    fetch(GetAllCoursesURL).then((response) => {
+        return response.json();
+    }).then((data) => {
+        courses = data;
+        CourseTable();
+    })
+};
+GetAllCourses()
+
+
+const AddCourseURL = 'http://localhost:5209/api/Admin/Add-Course';
+//Add Courses in Database
+async function AddCourse(CourseData){
+    // Create new student
+    await fetch(AddCourseURL, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(CourseData)
+    });
+    GetAllCourses();
+    CourseTable();
+};
+
+
+const UpdateCourseURL = 'http://localhost:5209/api/Admin/update-Course';
+async function UpdateCourseFee(CourseId , NewFee){
+    // Update Course
+    await fetch(`${UpdateCourseURL}?Id=${CourseId}&Totalfee=${NewFee}`, {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json"
+        },
+    });
+    GetAllCourses();
+    CourseTable();
+};
+
+
+const DeleteCourseURL = 'http://localhost:5209/api/Admin/Delete-Course';
+// Delete Course From Database
+async function DeleteCourse(CourseId){
+    // Delete Course
+    await fetch(`${DeleteCourseURL}/${CourseId}`, {
+        method: "DELETE"
+    });
+};
+
+
+//Site Navbar
+
 const toggle = document.querySelector(".fa-bars")
 const toggleClose = document.querySelector(".fa-xmark")
 const sideNavebar = document.querySelector(".side-navebar")
@@ -10,7 +67,7 @@ toggleClose.addEventListener("click" , function(){
     sideNavebar.style.right = "-60%"
 })
 
-const courses = JSON.parse(localStorage.getItem('courses')) || [] ;
+// const courses = JSON.parse(localStorage.getItem('courses')) || [] ;
 
 //Form Submit Function
 document.getElementById("course-offerings-form").addEventListener('submit',(event) =>{
@@ -21,18 +78,26 @@ document.getElementById("course-offerings-form").addEventListener('submit',(even
     const totalFee = Number(document.getElementById("course-fee").value);
     let courseID = Number(Math.floor(Math.random()*1000000))
 
-    const course = courses.find(c=>c.courseName == courseName && c.level == level)
+    const course = courses.find(c => c.coursename.toLowerCase() == courseName.toLowerCase() && c.proficiencyLevel == level)
+    console.log(course)
     if(course){
-        course.totalFee = totalFee
+        course.courseFee = totalFee
+        UpdateCourseFee(course.courseid, course.courseFee)
+
         document.getElementById('course-offerings-message').innerHTML = "Update Fee Successfully"
         CourseTable();
     }else{
-        courses.push({courseID,courseName,level,totalFee})
-        document.getElementById('course-offerings-message').innerHTML = "Added New Course"
-        CourseTable();
+       const coursedata = {
+        courseid: courseID,
+        coursename: courseName,
+        proficiencyLevel: level,
+        courseFee: totalFee
+       }
+       AddCourse(coursedata)
+        console.log("course Added")
     }
 
-    localStorage.setItem('courses',JSON.stringify(courses));
+    // localStorage.setItem('courses',JSON.stringify(courses));
     event.target.reset()
 });
 
@@ -45,10 +110,10 @@ function CourseTable(){
     courses.forEach((course) => {
         const row = document.createElement('tr');
         row.innerHTML = `
-            <td>${course.courseName}</td>
-            <td>${course.level}</td>
-            <td>${course.totalFee}/= </td>
-            <td><button class ="action-btn btn2" onclick="removeCourseById(event,${course.courseID})" >Remove</button></td>
+            <td>${course.coursename}</td>
+            <td>${course.proficiencyLevel}</td>
+            <td>${course.courseFee}/= </td>
+            <td><button class ="action-btn btn2" onclick="removeCourseById(event,${course.courseid})" >Remove</button></td>
         `;
         table.appendChild(row);
     });
@@ -61,12 +126,11 @@ function removeCourseById(event,courseIdToRemove) {
     const row = event.target.parentElement.parentElement;
     row.remove();
 
-    const courses = JSON.parse(localStorage.getItem('courses')) || [];
-    let indexToRemove = courses.findIndex(obj => obj.courseID === courseIdToRemove);
+    
+    let indexToRemove = courses.findIndex(obj => obj.courseid === courseIdToRemove);
 
     if (indexToRemove !== -1) {
-        courses.splice(indexToRemove, 1); 
-        localStorage.setItem('courses', JSON.stringify(courses));
+        DeleteCourse(courseIdToRemove) 
         document.getElementById('course-offerings-message-2').style.color = "Green";
         document.getElementById('course-offerings-message-2').textContent = "Course Removed Successfully";
     } else {
@@ -77,28 +141,6 @@ function removeCourseById(event,courseIdToRemove) {
         document.getElementById('course-offerings-message-2').textContent = "";
         }, 2000);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 //Logout function
