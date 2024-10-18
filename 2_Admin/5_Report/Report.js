@@ -160,29 +160,10 @@ function ShowInstallmentStudentDetails(student, installment) {
   `;
   courseDetails.append(row2);
 
-document.addEventListener('DOMContentLoaded',()=>{
-    const table = document.getElementById('course-enrollment-table');
-        courses.forEach((course) => {
-            let courseEnrollment = 0;
-            students.forEach((student) => {
-
-                if(student.course == course.courseName && student.ProficiencyLevels == course.level ){
-                        courseEnrollment ++;
-                }
-
-            })
-
-            const row = document.createElement('tr');
-            row.innerHTML = `
-                <td>${course.courseID}</td>
-                <td>${course.courseName}</td>
-                <td>${course.level}</td>
-                <td>${courseEnrollment}</td>
-            `;
-            table.appendChild(row);
-        });
-
-});
+  const paymentDetails = document.getElementById(
+    "installment-Payment-details-table"
+  );
+  paymentDetails.innerHTML = "";
 
 //Financial Report
 //Financial Report
