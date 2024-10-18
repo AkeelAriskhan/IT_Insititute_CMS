@@ -66,6 +66,29 @@ async function GetAllStudents(){
 
 GetAllStudents();
 
+const UpdateStudentURL = 'http://localhost:5209/api/Admin/Update-Student';
+//Update Student Contact details
+async function UpdateStudentFetch(studentUpdateData){
+  //update Student
+  await fetch(`${UpdateStudentURL}`,{
+    method: "PUT",
+    headers:{
+      "Content-Type":"application/json"
+    },
+    body:JSON.stringify(studentUpdateData)
+  });
+  GetAllStudents();
+};
+
+const UpdatePasswordURL = 'http://localhost:5209/api/student/password-Update';
+async function UpdatePassword(password,nic){ 
+  //Delete Student
+  await fetch(`${UpdatePasswordURL}?password=${password}&nic=${nic}`,{
+    method:"PUT"
+  });
+
+};
+
 // Home Page
 document.addEventListener("DOMContentLoaded" ,() =>{
     const student = students.find(s => s.nicNumber == nic);
