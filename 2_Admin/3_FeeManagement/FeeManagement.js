@@ -257,17 +257,17 @@ function installmentTable(){
         table.appendChild(row);
     });
 }
-installmentTable();      
+// installmentTable();      
 
 //Full Payment Table
 function FullpaymentTable(){
     const table = document.getElementById('fullpayment-body');
     table.innerHTML = ""
     students.forEach((student) => {
-        if(student.fullpayment != null){
+        if(student.fullpayment != 0){
             const row = document.createElement('tr');
             row.innerHTML = `
-                <td>${student.nicNumber}</td>
+                <td>${student.nic}</td>
                 <td>${student.fullName}</td>
                 <td>${student.fullpayment}/= </td>
                 <td>${student.fullpayment}/= </td>
