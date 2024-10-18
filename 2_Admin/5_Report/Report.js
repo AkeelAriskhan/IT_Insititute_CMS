@@ -58,7 +58,6 @@ document.getElementById("report-generate-btn").addEventListener("click", () => {
   StudentReport(nic);
 });
 
-
 function StudentReport(nic) {
   const student = students.find((student) => student.nic == nic);
   console.log(student)
@@ -106,7 +105,6 @@ function ShowFullPaymentStudentDetails(student) {
   const paymentDetails = document.getElementById("full-Payment-details-table");
   paymentDetails.innerHTML = "";
 
-
   const row3 = document.createElement("tr");
   row3.innerHTML = `
         <td>${student.fullpayment}</td>
@@ -124,7 +122,6 @@ function StudentWhoDidntSelectACourse(student) {
   StudentDetails.innerHTML = "";
   document.getElementById("Course-details-table").innerHTML = "";
   document.getElementById("full-Payment-details-table").innerHTML = "";
-
 
   const row = document.createElement("tr");
   row.innerHTML = `
@@ -181,7 +178,6 @@ function ShowInstallmentStudentDetails(student, installment) {
   document.getElementById("row1").style.display = "none";
 }
 
-
 // Course Enrollment
 // Course Enrollment
 // Course Enrollment
@@ -209,6 +205,14 @@ function CourseEnrollTable(){
       table.appendChild(row);
   });
 }
+    
+
+
+
+//Financial Report
+//Financial Report
+//Financial Report
+//Financial Report
 
 
 function FinancialRepoart(){
@@ -227,7 +231,7 @@ function FinancialRepoart(){
       paidInstallment += installment.paymentPaid
       outStandingAmount += installment.paymentDue
   })
-    
+
   const financialReport = document.getElementById("financial-report-table");
   const row = document.createElement("tr");
   row.innerHTML = `
@@ -238,23 +242,29 @@ function FinancialRepoart(){
       `;
   financialReport.append(row);
 }
-   // nave link function
+   
+
+
+
+
+// nave link function
 
 document.getElementById('student-details-btn').addEventListener('click',()=>{
-  document.getElementById('student-details-report').style.display = "block"
-  document.getElementById('course-enrollment').style.display = "none"
-  document.getElementById('financial-report').style.display = "none"
+    document.getElementById('student-details-report').style.display = "block"
+    document.getElementById('course-enrollment').style.display = "none"
+    document.getElementById('financial-report').style.display = "none"
 })
 document.getElementById('course-enrollment-btn').addEventListener('click',()=>{
-  document.getElementById('student-details-report').style.display = "none"
-  document.getElementById('course-enrollment').style.display = "block"
-  document.getElementById('financial-report').style.display = "none"
+    document.getElementById('student-details-report').style.display = "none"
+    document.getElementById('course-enrollment').style.display = "block"
+    document.getElementById('financial-report').style.display = "none"
 })
 document.getElementById('financial-btn').addEventListener('click',()=>{
-  document.getElementById('student-details-report').style.display = "none"
-  document.getElementById('course-enrollment').style.display = "none"
-  document.getElementById('financial-report').style.display = "block"
+    document.getElementById('student-details-report').style.display = "none"
+    document.getElementById('course-enrollment').style.display = "none"
+    document.getElementById('financial-report').style.display = "block"
 })
+
 // Logout function
 
 function logout() {
@@ -265,4 +275,3 @@ const logoutButton = document.getElementById("logoutButton");
 logoutButton.addEventListener("click", function () {
   logout();
 });
-
