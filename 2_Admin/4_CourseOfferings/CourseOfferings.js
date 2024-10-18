@@ -27,6 +27,19 @@ async function AddCourse(CourseData){
     CourseTable();
 };
 
+const UpdateCourseURL = 'http://localhost:5209/api/Admin/update-Course';
+async function UpdateCourseFee(CourseId , NewFee){
+    // Update Course
+    await fetch(`${UpdateCourseURL}?Id=${CourseId}&Totalfee=${NewFee}`, {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json"
+        },
+    });
+    GetAllCourses();
+    CourseTable();
+};
+
 toggle.addEventListener("click" ,function(){
     sideNavebar.style.right = "0"
 })
