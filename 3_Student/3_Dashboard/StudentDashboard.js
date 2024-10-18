@@ -89,6 +89,19 @@ async function UpdatePassword(password,nic){
 
 };
 
+function ProfilePicLoading(){
+    const student = students.find(s => s.nic == nic);
+    const imagePath = student.imagePath
+    const imageFullPath = `http://localhost:5209${imagePath}`.trim();
+
+    const ProfilePicContainer = document.getElementById('profilepic-container');
+    ProfilePicContainer.innerHTML = `
+        <img src="${imageFullPath}" alt="${student.fullName}"  id="profile-picture" class="profile-picture">
+    `;
+    
+}
+
+
 // Home Page
 document.addEventListener("DOMContentLoaded" ,() =>{
     const student = students.find(s => s.nicNumber == nic);
