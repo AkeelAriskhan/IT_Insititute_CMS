@@ -11,9 +11,11 @@ toggleClose.addEventListener("click" , function(){
 
 
 // Retrive Data From Local Storage
-const students = JSON.parse(localStorage.getItem('students')) || [];
-const courses = JSON.parse(localStorage.getItem('courses'));
-const InstallmentDetails = JSON.parse(localStorage.getItem('installmentDetails')) || [];
+let students = [];
+const AddStudentURL = 'http://localhost:5209/api/Admin/Add-Student';
+const DeleteStudentURL = 'http://localhost:5209/api/Admin/Delete-Students';
+
+
 
 let totalAmount = 0;
 let installmentAmount = 0;
