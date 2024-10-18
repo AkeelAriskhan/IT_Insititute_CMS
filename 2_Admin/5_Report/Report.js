@@ -165,10 +165,22 @@ function ShowInstallmentStudentDetails(student, installment) {
   );
   paymentDetails.innerHTML = "";
 
-//Financial Report
-//Financial Report
-//Financial Report
-//Financial Report
+  const row3 = document.createElement("tr");
+  row3.innerHTML = `
+      <td>${installment.totalAmount}</td>
+      <td>Installment</td>
+      <td>${student.duration}</td>
+      <td>${installment.totalAmount}</td>
+      <td>${installment.paymentPaid}</td>
+      <td>${installment.paymentDue}</td>
+      <td>${new Date(installment.paymentDate).toDateString()}</td>
+  `;
+  paymentDetails.append(row3);
+
+  document.getElementById("row2").style.display = "inline-block";
+  document.getElementById("row1").style.display = "none";
+}
+
 
 document.addEventListener('DOMContentLoaded',()=>{
 
