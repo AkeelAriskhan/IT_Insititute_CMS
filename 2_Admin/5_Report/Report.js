@@ -95,11 +95,13 @@ function ShowFullPaymentStudentDetails(student) {
   const courseDetails = document.getElementById("Course-details-table");
   courseDetails.innerHTML = "";
 
-function StudentWhoDidntSelectACourse(student) {
-  const StudentDetails = document.getElementById("student-details-table");
-  StudentDetails.innerHTML = "";
-  document.getElementById("Course-details-table").innerHTML = "";
-  document.getElementById("full-Payment-details-table").innerHTML = "";
+  const row2 = document.createElement("tr");
+  row2.innerHTML = `
+        <td>${student.course}</td>
+        <td>${student.proficiencyLevels}</td>
+        <td>${student.duration} / Months</td>
+    `;
+  courseDetails.append(row2);
 
   const row = document.createElement("tr");
   row.innerHTML = `
