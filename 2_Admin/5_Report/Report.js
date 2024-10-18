@@ -136,10 +136,9 @@ function StudentWhoDidntSelectACourse(student) {
   StudentDetails.append(row);
 }
 
-  const paymentDetails = document.getElementById(
-    "installment-Payment-details-table"
-  );
-  paymentDetails.innerHTML = "";
+function ShowInstallmentStudentDetails(student, installment) {
+  const StudentDetails = document.getElementById("student-details-table");
+  StudentDetails.innerHTML = "";
 
   const row3 = document.createElement("tr");
   row3.innerHTML = `
