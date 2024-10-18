@@ -199,18 +199,18 @@ function CourseEnrollTable(){
 
       })
 
-    const financialReport = document.getElementById("financial-report-table");
-    const row = document.createElement("tr");
-    row.innerHTML = `
-            <td>${initialAmount}/=</td>
-            <td>${fullPayment + paidInstallment}/=</td>
-            <td>${fullPayment + paidInstallment + initialAmount}/=</td>
-            <td>${outStandingAmount}/=</td>
-        `;
-    financialReport.append(row);
+      const row = document.createElement('tr');
+      row.innerHTML = `
+          <td>${course.courseid}</td>
+          <td>${course.coursename}</td>
+          <td>${course.proficiencyLevel}</td>
+          <td>${courseEnrollment}</td>
+      `;
+      table.appendChild(row);
+  });
+}
+    
 
-
-});
 
 // nave link function
 
