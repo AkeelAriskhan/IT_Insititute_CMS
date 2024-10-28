@@ -17,11 +17,11 @@ function encryption(password){
 
 document.getElementById('login-form').addEventListener('submit' , (event)=>{
     event.preventDefault();
-
+ console.log(students)
     const nicNumber = document.getElementById("nic-input").value;
     const password = encryption(document.getElementById("password-input").value);
 
-    const student = students.find(s => s.nicNumber == nicNumber && s.password == password)
+    const student = students.find(s => s.nic == nicNumber && s.password == password)
     if(student){
         if(student.course == null){
             window.location.href = "../2_CourseSelection/CourseSelection.html"

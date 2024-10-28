@@ -104,7 +104,8 @@ async function AddInstallment(InstallmentData){
 
 document.getElementById('nic').addEventListener("keyup" , () =>{
     const nic = document.getElementById('nic').value;
-    const student = students.find((student) => student.nicNumber == nic);
+    console.log(students);
+    const student = students.find((student) => student.nic == nic);
             
 
     if(student){
@@ -112,19 +113,20 @@ document.getElementById('nic').addEventListener("keyup" , () =>{
         if( student.course != null  || student.ProficiencyLevels != null){
             document.getElementById('fee-management-message').textContent = student.fullName;
             document.getElementById('fee-management-message').style.color = "green";
+            console.log(courses);
 
             courses.forEach(element => {
-                if(element.courseName == student.course && element.level == student.ProficiencyLevels){
-                    document.getElementById('total-course-fee').textContent = `${element.totalFee} Rs`;
-                    document.getElementById('total-amount').textContent = `${element.totalFee} Rs`;
+                if(element.coursename == student.course && element.proficiencyLevel == student.proficiencyLevels){
+                    document.getElementById('total-course-fee').textContent = `${element.courseFee} Rs`;
+                    document.getElementById('total-amount').textContent = `${element.courseFee} Rs`;
                     if(student.duration == "3"){
-                        installmentAmount = element.totalFee / 3;
+                        installmentAmount = element.courseFee / 3;
                         document.getElementById('installment-amount').textContent = `${installmentAmount} Rs / Month`
                     }else if(student.duration == "6"){
-                            installmentAmount = element.totalFee / 6;
+                            installmentAmount = element.courseFee / 6;
                             document.getElementById('installment-amount').textContent = `${installmentAmount} Rs / Month`
                     }
-                    totalAmount = element.totalFee;
+                    totalAmount = element.courseFee;
                 }
             });
 
@@ -150,13 +152,14 @@ document.getElementById('fee-management-form').addEventListener('submit' ,(event
 
     const paymentplan = document.getElementById('payment-plan').value;
     const nic = document.getElementById('nic').value;
-    const student = students.find((student) => student.nicNumber == nic);
+    const student = students.find((student) => student.nic == nic);
+    console.log(student);
     const date = new Date()
     let paymentId = Number(Math.floor(Math.random()*1000000))
 
     if(paymentplan == "fullpayment"){
 
-        if(student.fullpayment != null || student.installment != null){
+        if(student.fullpayment != 0 ){
             document.getElementById('fee-management-message').textContent = "Student already paid payment";
         }
         else{
@@ -171,7 +174,7 @@ document.getElementById('fee-management-form').addEventListener('submit' ,(event
     }
     else if(paymentplan == "installment"){
 
-        if(student.fullpayment != null ){
+        if(student.fullpayment != 0 ){
             document.getElementById('fee-management-message').textContent = "Student already paid Full payment";
         }
         else{
@@ -199,25 +202,22 @@ document.getElementById('fee-management-form').addEventListener('submit' ,(event
 
 
 
-
 //Installment Calculation
 function Installment(student,nic){
     // Today Date 
     const today = new Date();
 
-    student.installment = installmentAmount;
-
-    const studentInstallment = InstallmentDetails.find((installment) => installment.nicNumber == student.nicNumber)
+    const studentInstallment = InstallmentDetails.find((installment) => installment.nic == student.nic)
 
     if(studentInstallment){
-        if(studentInstallment.installment.paymentDue <= 0){
+        if(studentInstallment.paymentDue <= 0){
             document.getElementById('fee-management-message').style.color = "green";
             document.getElementById('fee-management-message').textContent = `${student.fullName} paid Full installment plan`;
         }else{
             const updatedata = {
                 nic,
                 installmentAmount:installmentAmount
-            } 
+            }
             UpdateInstallment(updatedata)
             document.getElementById('fee-management-message').textContent = `${student.fullName} Paid Installment Payment`;
         }
@@ -232,9 +232,8 @@ function Installment(student,nic){
             paymentPaid:installmentAmount,
             totalAmount:totalAmount
         }
-        AddInstallment(InstallmentData)
+        AddInstallment(InstallmentData);
         document.getElementById('fee-management-message').textContent = `${student.fullName} Paid Installment Payment`
-        installmentTable(); 
     }
 }
 
@@ -250,14 +249,14 @@ function installmentTable(){
         row.innerHTML = `
             <td>${installment.nic}</td>
             <td>${student.fullName}</td>
-            <td>${installment.installmentAmount}/= </td>
-            <td>${installment.paymentPaid}/= </td>
-            <td>${installment.paymentDue}/= </td>
+            <td>${(installment.installmentAmount).toFixed(0)}/= </td>
+            <td>${(installment.paymentPaid).toFixed(2)}/= </td>
+            <td>${(installment.paymentDue).toFixed(2) < 0 ? 0: (installment.paymentDue).toFixed(2)}/= </td>
         `;
         table.appendChild(row);
     });
 }
-// installmentTable();      
+   
 
 //Full Payment Table
 function FullpaymentTable(){
@@ -276,8 +275,7 @@ function FullpaymentTable(){
         }
     });
 }
-
-// FullpaymentTable();   
+  
 
 
 document.getElementById("installment-btn").addEventListener('click',() =>{

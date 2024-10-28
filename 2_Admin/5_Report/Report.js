@@ -168,8 +168,8 @@ function ShowInstallmentStudentDetails(student, installment) {
       <td>Installment</td>
       <td>${student.duration}</td>
       <td>${installment.totalAmount}</td>
-      <td>${installment.paymentPaid}</td>
-      <td>${installment.paymentDue}</td>
+      <td>${(installment.paymentPaid).toFixed(0)}</td>
+      <td>${(installment.paymentDue).toFixed(0)}</td>
       <td>${new Date(installment.paymentDate).toDateString()}</td>
   `;
   paymentDetails.append(row3);
@@ -236,9 +236,9 @@ function FinancialRepoart(){
   const row = document.createElement("tr");
   row.innerHTML = `
           <td>${initialAmount}/=</td>
-          <td>${fullPayment + paidInstallment}/=</td>
-          <td>${fullPayment + paidInstallment + initialAmount}/=</td>
-          <td>${outStandingAmount}/=</td>
+          <td>${(fullPayment + paidInstallment).toFixed(0)}/=</td>
+          <td>${(fullPayment + paidInstallment + initialAmount).toFixed(0)}/=</td>
+          <td>${(outStandingAmount).toFixed(0)}/=</td>
       `;
   financialReport.append(row);
 }

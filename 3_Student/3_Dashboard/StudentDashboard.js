@@ -131,8 +131,8 @@ function PaymentShow(){
         }else if(installment){
             document.getElementById("p1").textContent = `Course Fee   : ${installment.totalAmount}`
             document.getElementById("p2").textContent = `Payment Plan : Installment`
-            document.getElementById("p3").textContent = `Payment Paid : ${installment.paymentPaid}`
-            document.getElementById("p4").textContent = `Payment Due : ${installment.paymentDue}`
+            document.getElementById("p3").textContent = `Payment Paid : ${(installment.paymentPaid).toFixed(0)}`
+            document.getElementById("p4").textContent = `Payment Due : ${installment.paymentDue.toFixed(0)}`
             document.getElementById("p5").textContent = `Payment Date : ${new Date(installment.paymentDate).toDateString()}`
         }else{
             document.getElementById("p1").textContent = `Payment Pending .....`
@@ -217,7 +217,7 @@ document.getElementById('remove-notification').addEventListener('click' , (event
 
            if(endOfMonth.getDate() - today.getDate() <= 4){
                 document.getElementById('reminder').style.display = "flex"
-                document.getElementById('message').innerText = `You have to pay your installment of ${installment.installmentAmount}/= this month.`
+                document.getElementById('message').innerText = `You have to pay your installment of ${(installment.installmentAmount).toFixed(0)}/= this month.`
            }else{
                document.getElementById('reminder').style.display = "none"
            }

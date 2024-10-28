@@ -10,7 +10,61 @@ toggleClose.addEventListener("click", function () {
   sideNavebar.style.right = "-60%";
 });
 
-const students = JSON.parse(localStorage.getItem("students")) || []; // From Local Storage
+// const students = JSON.parse(localStorage.getItem("students")) || []; // From Local Storage
+let students = [];
+const AddStudentURL = 'http://localhost:5209/api/Admin/Add-Student';
+const DeleteStudentURL = 'http://localhost:5209/api/Admin/Delete-Students';
+
+//Add Student in Database
+async function AddStudent(studentData){
+  //Create new Student
+  await fetch(AddStudentURL,{
+    method:"POST",
+    body:studentData
+  });
+  GetAllStudents();
+  StudentTable();
+}
+
+
+const GetAllStudentsURL = 'http://localhost:5209/api/Admin/get-All-Students';
+async function GetAllStudents(){
+  fetch(GetAllStudentsURL).then((response) => {
+    return response.json();
+  }).then((data) => {
+    students = data;
+    StudentTable();
+  })
+};
+GetAllStudents();
+
+
+const UpdateStudentURL = 'http://localhost:5209/api/Admin/Update-Student';
+//Update Student Contact details
+async function UpdateStudentFetch(studentUpdateData){
+  //update Student
+  await fetch(`${UpdateStudentURL}`,{
+    method: "PUT",
+    headers:{
+      "Content-Type":"application/json"
+    },
+    body:JSON.stringify(studentUpdateData)
+  });
+  GetAllStudents();
+  StudentTable();
+};
+
+  //Delete Student from Database
+  async function DeleteStudent(StudentNic){ 
+    //Delete Student
+    await fetch(`${DeleteStudentURL}?nic=${StudentNic}`,{
+      method:"DELETE"
+    });
+  
+  };
+
+
+
 
 //Password Encryption
 function encryption(password) {
@@ -78,6 +132,7 @@ document
     const email = document.getElementById("email").value.trim();
     const phone = document.getElementById('phone').value.trim();
     const password = encryption(document.getElementById("password").value);
+    const fileinput = document.getElementById('profile').files;
     const registrationFee = 2500;
 
     // Validate NIC, phone, and password before proceeding
@@ -114,16 +169,17 @@ document
       document.getElementById("user-registration-message").textContent =
         "User already exist";
     } else {
-        students.push({
-          nicNumber,
-          fullName,
-          email,
-          phone,
-          password,
-          registrationFee,
-        });
+        const formdata = new FormData();
+        formdata.append("nic",nicNumber);
+        formdata.append("fullName",fullName);
+        formdata.append("email",email);
+        formdata.append("phoneNumber",phone);
+        formdata.append("password",password);
+        formdata.append("registrationFee",registrationFee);
+        formdata.append("imageFile",fileinput[0]);
+        AddStudent(formdata);
 
-        localStorage.setItem("students", JSON.stringify(students));
+        // localStorage.setItem("students", JSON.stringify(students));
         StudentTable();
         document.getElementById("user-registration-message").style.color =
           "Green";
@@ -140,7 +196,7 @@ document
 //This is for find Student already Exists
 document.getElementById("nic").addEventListener("keyup", () => {
   const nic = document.getElementById("nic").value;
-  const student = students.find((student) => student.nicNumber == nic);
+  const student = students.find((student) => student.nic == nic);
 
   if (nic.length != 0) {
       if(!validateNic(nic)){
@@ -205,12 +261,12 @@ function StudentTable() {
   students.forEach((student) => {
     const row = document.createElement("tr");
     row.innerHTML = `
-            <td>${student.nicNumber}</td>
+            <td>${student.nic}</td>
             <td>${student.fullName}</td>
-            <td>${student.phone}</td>
+            <td>${student.phoneNumber}</td>
             <td>${student.email}</td>
             
-            <td><button class="update-btn tableBtn" onclick="UpdateStudent('${student.nicNumber}')">Update</button><button class ="remove-btn tableBtn" onclick="removeStudentByNicNumber(event,'${student.nicNumber}')" >Remove</button></td>
+            <td><button class="update-btn tableBtn" onclick="UpdateStudent('${student.nic}')">Update</button><button class ="remove-btn tableBtn" onclick="removeStudentByNicNumber(event,'${student.nic}')" >Remove</button></td>
         `;
     tableBody.appendChild(row);
   });
@@ -221,33 +277,41 @@ function UpdateStudent(nic) {
   document.getElementById("overlay").style.display = "block";
   document.getElementById("popupbox").style.display = "block";
 
-  const student = students.find((student) => student.nicNumber == nic);
+  const student = students.find((student) => student.nic == nic);
 
-  document.getElementById("updatenic").value = student.nicNumber;
+  document.getElementById("updatenic").value = student.nic;
   document.getElementById("updatenic").disabled = true;
   document.getElementById("newname").value = student.fullName;
   document.getElementById("newEmail").value = student.email;
-  document.getElementById("newPhone").value = student.phone;
+  document.getElementById("newPhone").value = student.phoneNumber;
 }
-document
-  .getElementById("update-student-form")
-  .addEventListener("submit", (event) => {
+document.getElementById("update-student-form").addEventListener("submit", (event) => {
     event.preventDefault();
     const nic = document.getElementById("updatenic").value;
-    const student = students.find((student) => student.nicNumber == nic);
     const NewName = document.getElementById("newname").value.trim();
     const NewEmail = document.getElementById("newEmail").value.trim();
     const NewPhone = document.getElementById("newPhone").value.trim();
 
-    student.fullName = NewName;
-    student.email = NewEmail;
-    student.phone = NewPhone;
 
-    localStorage.setItem("students", JSON.stringify(students));
+    if(!validatePhone(NewPhone)) {
+      document.getElementById("user-registration-message-3").style.color = "Red";
+      document.getElementById("user-registration-message-3").textContent = "Invalid phone number. Must be 10 digits long.";
+      return;
+  }
+
+
+    const studentUpdateData = {
+      nic:nic,
+      fullName:NewName,
+      email:NewEmail,
+      phoneNumber:NewPhone
+    }
+    UpdateStudentFetch(studentUpdateData);
 
     document.getElementById("overlay").style.display = "none";
     document.getElementById("popupbox").style.display = "none";
-    StudentTable();
+    document.getElementById("user-registration-message-3").textContent = "";
+    
   });
 
 document.getElementById("cancel-btn").addEventListener("click", () => {
@@ -258,24 +322,20 @@ document.getElementById("cancel-btn").addEventListener("click", () => {
 //Remove Student
 function removeStudentByNicNumber(event, StudentNicToRemove) {
   const row = event.target.parentElement.parentElement;
-
   row.remove();
-
-  const students = JSON.parse(localStorage.getItem("students")) || [];
   let indexToRemove = students.findIndex(
-    (obj) => obj.nicNumber == StudentNicToRemove
+    (obj) => obj.nic == StudentNicToRemove
   );
 
-  if (indexToRemove !== -1) {
-    students.splice(indexToRemove, 1);
-    localStorage.setItem("students", JSON.stringify(students));
+  if (indexToRemove != -1) {
+    DeleteStudent(StudentNicToRemove)
     document.getElementById("user-registration-message-2").style.color =
       "Green";
     document.getElementById("user-registration-message-2").textContent =
       "Student Removed Successfully";
   } else {
     document.getElementById("user-registration-message-2").textContent =
-      "Student not found in local storage";
+      "Student not found";
   }
 
   setTimeout(() => {
