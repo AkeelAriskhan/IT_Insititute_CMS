@@ -94,29 +94,38 @@ document.getElementById("course-form").addEventListener('submit', (event) => {
 
     //Find the Student 
     const student = students.find(s => s.nic == nicNumber);
+    const scourse=courses.find(s=>s.proficiencyLevel==ProficiencyLevels && s.coursename==course)
     console.log(student)
 
 
     if (student) {
-        if (course != "" && ProficiencyLevels != "" && duration != "") {
-            const data={
-                course:course,
-                proficiencyLevels:ProficiencyLevels,
-                duration:duration
-            }
-            StudentCourseEnrollAdd(nicNumber,data)
-            document.getElementById('message').style.color = "green"
-            document.getElementById('message').textContent = "Course Successfuly selected"
+        if(scourse){
+            if (course != "" && ProficiencyLevels != "" && duration != "") {
+                const data={
+                    course:course,
+                    proficiencyLevels:ProficiencyLevels,
+                    duration:duration
+                }
+                StudentCourseEnrollAdd(nicNumber,data)
+                document.getElementById('message').style.color = "green"
+                document.getElementById('message').textContent = "Course Successfuly selected"
+    
+                sessionStorage.setItem('nic', JSON.stringify(nicNumber))
+                
+                setTimeout(()=>{
+                    window.location.href = "../3_Dashboard/StudentDashboard.html"
+                }, 500);
+            } else {
+                document.getElementById('message').style.color = "red";
+                document.getElementById('message').textContent = `Please Choose the field`;
+            } 
+        }else{
+            document.getElementById('message').textContent = "Course not available!"
+            document.getElementById('message').style.color = "red"
 
-            sessionStorage.setItem('nic', JSON.stringify(nicNumber))
-            
-            setTimeout(()=>{
-                window.location.href = "../3_Dashboard/StudentDashboard.html"
-            }, 500);
-        } else {
-            document.getElementById('message').style.color = "red";
-            document.getElementById('message').textContent = `Please Choose the field`;
+
         }
+        
     }
 })
 

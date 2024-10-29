@@ -157,7 +157,7 @@ document.getElementById('fee-management-form').addEventListener('submit' ,(event
     const date = new Date()
     let paymentId = Number(Math.floor(Math.random()*1000000))
 
-    if(paymentplan == "fullpayment"){
+    if(paymentplan == "fullpayment" && student.course!=null){
 
         if(student.fullpayment != 0 ){
             document.getElementById('fee-management-message').textContent = "Student already paid payment";
@@ -172,7 +172,7 @@ document.getElementById('fee-management-form').addEventListener('submit' ,(event
         }  
 
     }
-    else if(paymentplan == "installment"){
+    else if(paymentplan == "installment" && student.course!=null){
 
         if(student.fullpayment != 0 ){
             document.getElementById('fee-management-message').textContent = "Student already paid Full payment";
@@ -181,7 +181,15 @@ document.getElementById('fee-management-form').addEventListener('submit' ,(event
             Installment(student,nic);
         }
 
-    }else{
+    }
+    else if(student.course==null && paymentplan !=null){
+        document.getElementById('fee-management-message').textContent = "Student did't select a course";
+
+
+    }
+     
+    
+    else{
         document.getElementById('fee-management-message').textContent = "Please select the payment Plan";
     }
 

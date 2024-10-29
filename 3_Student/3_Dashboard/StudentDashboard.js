@@ -270,8 +270,8 @@ function validatePassword(password) {
 
   const student = students.find(s => s.nicNumber == nic);
 
-document.getElementById('update-password').addEventListener('click' , ()=>{
-    
+document.getElementById('password-form').addEventListener("submit" , (event)=>{
+    event.preventDefault();
     const oldPassword = Encryption(document.getElementById('oldPassword').value);
     const newPassword = Encryption(document.getElementById('newPassword').value);
     const confirmPassword = Encryption(document.getElementById('confirmPassword').value);
@@ -294,6 +294,7 @@ document.getElementById('update-password').addEventListener('click' , ()=>{
             if(newPassword == confirmPassword){
                 UpdatePassword(newPassword,nic)
                 alert('Password Changed Successfully')
+                event.target.reset()
             }else{
                 alert('Password does not match')
             }

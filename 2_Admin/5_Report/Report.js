@@ -59,7 +59,7 @@ document.getElementById("report-generate-btn").addEventListener("click", () => {
 });
 
 function StudentReport(nic) {
-  const student = students.find((student) => student.nic == nic);
+  const student = students.find((student) => student.nic.toUpperCase() == nic.toUpperCase());
   console.log(student)
   const installment = installments.find(
     (installment) => installment.nic == nic
