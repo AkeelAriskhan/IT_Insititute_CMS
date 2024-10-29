@@ -404,7 +404,7 @@ function NotificationsTable(){
                 const div = document.createElement('div');
                 div.className = "reminder";
                 div.innerHTML = `
-                    <p id="message">"Exciting news! We’re thrilled to announce the launch of our new course, <strong>${course.coursename}  ${course.proficiencyLevel}</strong>, starting on <strong>${new Date(N.date).toDateString()}</strong></p>
+                    <p id="message">"Available!! We have a new, <strong>${course.coursename}  ${course.proficiencyLevel}</strong> course ready for you! it's a great chance to learn new skills and improve your knowledge. starting on <strong>${new Date(N.date).toDateString()}</strong></p>
                     <i class="fa-regular fa-circle-xmark" onclick="removeCourseNotification(event,'${N.id}')"></i>
                 `;
                 notificationContainer.appendChild(div);
