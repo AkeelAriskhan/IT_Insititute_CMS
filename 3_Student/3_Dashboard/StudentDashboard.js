@@ -41,15 +41,56 @@ const nic = JSON.parse(sessionStorage.getItem("nic"))
 
 let students = [];
 let installments = [];
+let Notifications = [];
+let courses=[];
 
 const GetAllStudentsURL = 'http://localhost:5209/api/Admin/get-All-Students';
+const GetNotificationURL = 'http://localhost:5209/api/Notification/Get-All-Notifications';
+
+
+
+const GetAllInstallmentsURL = 'http://localhost:5209/api/Payment/getinstalmentdetails';
+async function GetAllInstallments(){
+    fetch(GetAllInstallmentsURL).then((response) => {
+        return response.json();
+    }).then((data) => {
+        installments = data;
+        // installmentTable();   
+    })
+};
+
+const GetAllCoursesURL = 'http://localhost:5209/api/Admin/Get-All-course';
+//Fetch Students Data from Database
+async function GetAllCourses(){
+    fetch(GetAllCoursesURL).then((response) => {
+        return response.json();
+    }).then((data) => {
+        courses = data;
+        // CourseTable();
+    })
+};
+GetAllCourses()
+
+
+
+
+async function GetNotifications(){
+    fetch(GetNotificationURL).then((response) => {
+        return response.json();
+    }).then((data) => {
+        Notifications = data;})
+}
+GetNotifications()
 async function GetAllStudents(){
     fetch(GetAllStudentsURL).then((response) => {
         return response.json();
     }).then((data) => {
         students = data;
+
+        
         ProfilePicLoading();
         DetailsUpdateFormAutoFill();
+        NotificationsTable()
 
         const GetAllInstallmentsURL = 'http://localhost:5209/api/Payment/getinstalmentdetails';
         async function GetAllInstallments(){
@@ -345,20 +386,25 @@ document.getElementById('notification').addEventListener('click',()=>{
     document.getElementById('password-change').style.display = "none"
     document.getElementById('notification-container').style.display = "block"
     document.getElementById('course-container').style.display = "none"
+    NotificationsTable();
 })
 
 function NotificationsTable(){
     const student = students.find(s => s.nic == nic);
     const notificationContainer = document.getElementById('notification-container');
     notificationContainer.innerHTML = ""
+    console.log(Notifications)
     Notifications.forEach(N => {
+        console.log(N)
         if(N.nic == nic && N.isDeleted != true){
             if(N.type == "Course"){
-                const course = courses.find(c => c.id == N.sourceId)
+                console.log(courses);
+                const course = courses.find(c => c.courseid == N.sourceId)
+                console.log(course);
                 const div = document.createElement('div');
                 div.className = "reminder";
                 div.innerHTML = `
-                    <p id="message">"Exciting news! We’re thrilled to announce the launch of our new course, <strong>${course.courseName}  ${course.level}</strong>, starting on <strong>${new Date(N.date).toDateString()}</strong></p>
+                    <p id="message">"Exciting news! We’re thrilled to announce the launch of our new course, <strong>${course.coursename}  ${course.proficiencyLevel}</strong>, starting on <strong>${new Date(N.date).toDateString()}</strong></p>
                     <i class="fa-regular fa-circle-xmark" onclick="removeCourseNotification(event,'${N.id}')"></i>
                 `;
                 notificationContainer.appendChild(div);
@@ -369,12 +415,12 @@ function NotificationsTable(){
                 const div = document.createElement('div');
                 div.className = "reminder";
                 div.innerHTML = `
-                    <p id="message">"Dear <strong>${student.fullName}</strong>, we are pleased to inform you that your full payment <strong>${fullpayment.fullPayment} Rs</strong> for <strong>${course.courseName} ${course.level} </strong>has been successfully received as of <strong>${new Date(N.date).toDateString()}</strong>. Thank you for your prompt payment!"</p>
+                    <p id="message">"Dear <strong>${student.fullName}</strong>, we are pleased to inform you that your full payment <strong>${student.fullPayment} Rs</strong> for <strong>${course.courseName} ${course.level} </strong>has been successfully received as of <strong>${new Date(N.date).toDateString()}</strong>. Thank you for your prompt payment!"</p>
                     <i class="fa-regular fa-circle-xmark" onclick="removeCourseNotification(event,'${N.id}')"></i>
                 `;
                 notificationContainer.appendChild(div);
             }else if(N.type == "Installment"){
-                const installment = installments.find(i => i.id == N.sourceId)
+                const installment = installments.find(i => i.Nic == N.sourceId)
                 const courseEnroll = courseEnrollData.find(ce => ce.installmentId == installment.id)
                 const course = courses.find(c => c.id == courseEnroll.courseId)
                 const div = document.createElement('div');
